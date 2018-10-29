@@ -7,6 +7,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 require __DIR__.'/../vendor/autoload.php';
 
+// This is to remove the APP_ENV from the Dockerfile and using the .env file instead
+if (isset($_SERVER['APP_ENV']) && $_SERVER['APP_ENV'] === 'dev') {
+    unset($_SERVER['APP_ENV']);
+}
+
 // The check is to ensure we don't use .env in production
 if (!isset($_SERVER['APP_ENV'])) {
     if (!class_exists(Dotenv::class)) {
