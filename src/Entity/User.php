@@ -21,42 +21,46 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $bnet_id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $bnet_sub;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $bnet_battletag;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $bnet_access_token;
 
-
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $api_token;
-
-    /**
-     * @var bool
-     *
      * @ORM\Column(name="enabled", type="boolean", options={"default" : true})
      */
     private $enabled = true;
 
-    public function __construct()
-    {
-        $this->api_token = uniqid();
-    }
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $username;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $password;
+
+    /**
+     * A non-persisted field that's used to create the encoded password.
+     *
+     * @var string $plainPassword
+     */
+    private $plainPassword;
 
     /**
      * @return int|null
@@ -174,7 +178,37 @@ class User implements UserInterface
      */
     public function getPassword()
     {
-        return null;
+        return $this->password;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param $plainPassword
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+        // forces the object to look "dirty" to Doctrine. Avoids
+        // Doctrine *not* saving this entity, if only plainPassword changes
+        $this->password = null;
+    }
+
+    /**
+     * @param $password
+     * @return $this
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
     }
 
     /**
@@ -190,14 +224,26 @@ class User implements UserInterface
      */
     public function getUsername()
     {
-        return $this->getBnetBattletag();
+        return $this->username;
     }
+
+    /**
+     * @param mixed $username
+     * @return User
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
 
     /**
      * @return null
      */
     public function eraseCredentials()
     {
-        return null;
+        $this->plainPassword = null;
     }
 }
