@@ -35,3 +35,7 @@ services:
     App\EventListener\HashPasswordListener:
         tags:
         - { name: doctrine.event_subscriber }
+
+    App\Filter\SearchFilter:
+        tags: [ { name: 'api_platform.filter', id: 'search' } ]
+

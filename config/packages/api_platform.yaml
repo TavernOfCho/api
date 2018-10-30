@@ -7,7 +7,10 @@ parameters:
 
 api_platform:
     mapping:
-        paths: ['%kernel.project_dir%/src/Entity']
+        paths:
+        - '%kernel.project_dir%/config/packages/api_platform'
+    resource_class_directories:
+    - '%kernel.project_dir%/src/Entity'
     title: Hello API Platform
     version: 1.0.0
      Enable the Varnish integration
@@ -24,3 +27,8 @@ api_platform:
             apiKey:
                 name: Authorization
                 type: header
+doctrine:
+    orm:
+        filters:
+            user_filter:
+                class: App\Filter\SearchFilter

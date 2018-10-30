@@ -5,9 +5,11 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use App\Filter\SearchAnnotation as Searchable;
 
 /**
  * @ApiResource()
+ * @Searchable({"username"})
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="users")
  */

@@ -33,4 +33,12 @@ class SecurityController extends AbstractController
 
         return $this->json(sprintf('User %s successfully created', $user->getUsername()));
     }
+
+    /**
+     * @Route("/user/security", name="user_security")
+     */
+    public function me()
+    {
+
+    }
 }
