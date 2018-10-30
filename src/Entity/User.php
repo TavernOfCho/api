@@ -4,12 +4,14 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Table(name="users")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -38,16 +40,44 @@ class User
      */
     private $bnet_access_token;
 
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $api_token;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="enabled", type="boolean", options={"default" : true})
+     */
+    private $enabled = true;
+
+    public function __construct()
+    {
+        $this->api_token = uniqid();
+    }
+
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return int|null
+     */
     public function getBnetId(): ?int
     {
         return $this->bnet_id;
     }
 
+    /**
+     * @param int $bnet_id
+     * @return User
+     */
     public function setBnetId(int $bnet_id): self
     {
         $this->bnet_id = $bnet_id;
@@ -55,11 +85,18 @@ class User
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getBnetSub(): ?string
     {
         return $this->bnet_sub;
     }
 
+    /**
+     * @param string $bnet_sub
+     * @return User
+     */
     public function setBnetSub(string $bnet_sub): self
     {
         $this->bnet_sub = $bnet_sub;
@@ -67,11 +104,18 @@ class User
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getBnetBattletag(): ?string
     {
         return $this->bnet_battletag;
     }
 
+    /**
+     * @param string $bnet_battletag
+     * @return User
+     */
     public function setBnetBattletag(string $bnet_battletag): self
     {
         $this->bnet_battletag = $bnet_battletag;
@@ -79,15 +123,81 @@ class User
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getBnetAccessToken(): ?string
     {
         return $this->bnet_access_token;
     }
 
+    /**
+     * @param string $bnet_access_token
+     * @return User
+     */
     public function setBnetAccessToken(string $bnet_access_token): self
     {
         $this->bnet_access_token = $bnet_access_token;
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * @param bool $enabled
+     * @return User
+     */
+    public function setEnabled(bool $enabled): self
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * @return array The user roles
+     */
+    public function getRoles()
+    {
+        return ['ROLE_USER'];
+    }
+
+    /**
+     * @return string The password
+     */
+    public function getPassword()
+    {
+        return null;
+    }
+
+    /**
+     * @return string|null The salt
+     */
+    public function getSalt()
+    {
+        return null;
+    }
+
+    /**
+     * @return string The username
+     */
+    public function getUsername()
+    {
+        return $this->getBnetBattletag();
+    }
+
+    /**
+     * @return null
+     */
+    public function eraseCredentials()
+    {
+        return null;
     }
 }
