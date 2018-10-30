@@ -1,12 +1,13 @@
 App\Entity\User:
     itemOperations:
-#        user_security:
-#            method: GET
-#            path: /users/security
-#            controller: 'App\Controller\UserSecurityAction'
         get: ~
         put: ~
         delete: ~
     collectionOperations:
         get: ~
         post: ~
+        user_security:
+            method: GET
+            path: /users/security
+            controller: 'App\Controller\Api\UserSecurityAction'
+
