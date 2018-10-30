@@ -2,17 +2,14 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
-    api_key: "%env(API_KEY)%"
+    api_key: '%env(API_KEY)%'
 
 services:
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-        public: false       # Allows optimizing the container by removing unused services; this also means
-        bind:
-            $api_key: '%api_key%'                            
-                            
+        public: false       # Allows optimizing the container by removing unused services; this also means                            
                             # fetching services directly from the container via $container->get() won't work.
                             # The best practice is to be explicit about your dependencies anyway.
 
@@ -40,3 +37,7 @@ services:
         tags:
         - { name: doctrine.event_subscriber }
 
+
+    App\DataProvider\UserSecurityItemDataProvider:
+        arguments:
+            $api_key: '%api_key%'

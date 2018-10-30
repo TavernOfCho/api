@@ -41,6 +41,7 @@ final class UserSecurityItemDataProvider implements CollectionDataProviderInterf
         $this->manager = $manager;
         $this->request = $requestStack->getCurrentRequest();
         $this->encoder = $encoder;
+        var_dump($api_key);exit;
         $this->api_key = $api_key;
     }
 
@@ -74,6 +75,7 @@ final class UserSecurityItemDataProvider implements CollectionDataProviderInterf
         }
 
         // Wrong API key
+        var_dump($filters['api_key'], $this->api_key);exit;
         if ($filters['api_key'] != $this->api_key) {
             throw new ResourceClassNotSupportedException();
         }

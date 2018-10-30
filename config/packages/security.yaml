@@ -44,7 +44,7 @@ security:
     - { path: ^/$, role: IS_AUTHENTICATED_ANONYMOUSLY }
     
     # API specific cases
-    - { path: ^/users/security, role: IS_AUTHENTICATED_ANONYMOUSLY, methods:[GET, POST, PUT], host: '%env(SITE_DOMAIN)%' }
+    - { path: ^/users/security, role: IS_AUTHENTICATED_ANONYMOUSLY, methods:[GET, POST, PUT] }
     
     # Basic Security
     - { path: ^/, role: IS_AUTHENTICATED_FULLY }
