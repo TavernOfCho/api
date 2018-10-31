@@ -86,6 +86,9 @@
             "ref": "bb31a3bbec00a8fc8aa1c9fbf9b0ef9fc492f93d"
         }
     },
+    "gesdinet/jwt-refresh-token-bundle": {
+        "version": "v0.5.3"
+    },
     "guzzlehttp/guzzle": {
         "version": "6.3.0"
     },
