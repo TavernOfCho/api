@@ -10,4 +10,7 @@ App\Entity\User:
             method: GET
             path: /users/security
             controller: 'App\Controller\Api\UserSecurityAction'
-
+            swagger_context:
+                summary: "Retrieve a user list with specific filters"
+                description: "Retrieve a user list with username, password and api_key filters"
+            
