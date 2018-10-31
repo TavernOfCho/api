@@ -43,8 +43,13 @@ security:
     - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/$, role: IS_AUTHENTICATED_ANONYMOUSLY }
     
+    # API basic path
+    - { path: ^/index, role: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/docs, role: IS_AUTHENTICATED_ANONYMOUSLY }
+
     # API specific cases
-    - { path: ^/users/security, role: IS_AUTHENTICATED_ANONYMOUSLY, methods:[GET, POST, PUT] }
+    - { path: ^/users/security, role: IS_AUTHENTICATED_ANONYMOUSLY, methods:[GET] }
+    - { path: ^/users, role: IS_AUTHENTICATED_ANONYMOUSLY, methods:[POST] }
     
     # Basic Security
     - { path: ^/, role: IS_AUTHENTICATED_FULLY }
