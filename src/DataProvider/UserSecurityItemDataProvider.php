@@ -70,7 +70,7 @@ final class UserSecurityItemDataProvider implements CollectionDataProviderInterf
 
         // Missing filter
         if (!isset($filters['api_key'], $filters['username'], $filters['password'])) {
-            throw new ResourceClassNotSupportedException();
+            return null;
         }
 
         // Wrong API key
