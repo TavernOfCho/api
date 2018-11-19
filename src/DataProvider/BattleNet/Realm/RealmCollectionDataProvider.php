@@ -1,17 +1,16 @@
 <?php
 
-namespace App\DataProvider\Realm;
+namespace App\DataProvider\BattleNet\Realm;
 
 use ApiPlatform\Core\DataProvider\CollectionDataProviderInterface;
 use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
 use ApiPlatform\Core\Exception\ResourceClassNotSupportedException;
-use App\DataProvider\BattleNet\BattleNetDataProvider;
 use App\Entity\Realm;
 
 /**
  * Class RealmCollectionDataProvider
  */
-class RealmCollectionDataProvider extends BattleNetDataProvider implements CollectionDataProviderInterface, RestrictedDataProviderInterface
+class RealmCollectionDataProvider extends RealmDataProvider implements CollectionDataProviderInterface, RestrictedDataProviderInterface
 {
     /**
      * @param string $resourceClass

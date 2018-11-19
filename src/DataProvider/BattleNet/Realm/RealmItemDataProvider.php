@@ -1,14 +1,13 @@
 <?php
 
-namespace App\DataProvider\Realm;
+namespace App\DataProvider\BattleNet\Realm;
 
 use ApiPlatform\Core\DataProvider\ItemDataProviderInterface;
 use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
 use ApiPlatform\Core\Exception\ResourceClassNotSupportedException;
-use App\DataProvider\BattleNet\BattleNetDataProvider;
 use App\Entity\Realm;
 
-class RealmItemDataProvider extends BattleNetDataProvider implements ItemDataProviderInterface, RestrictedDataProviderInterface
+class RealmItemDataProvider extends RealmDataProvider implements ItemDataProviderInterface, RestrictedDataProviderInterface
 {
     /**
      * @param string $resourceClass
@@ -29,17 +28,14 @@ class RealmItemDataProvider extends BattleNetDataProvider implements ItemDataPro
      *
      * @param string|null $operationName
      * @param array $context
-     * @return array
+     * @return Realm
      */
-    public function getItem(string $resourceClass, $id, string $operationName = null, array $context = [])
+    public function getItem(string $resourceClass, $id, string $operationName = null, array $context = []): ?Realm
     {
         if ($operationName === 'get') {
-            $id = str_replace("/realms/", "", $context['request_uri']);
-
-            return $this->battleNetSDK->getRealm($id);
+            return $this->transformer->transform($this->battleNetSDK->getRealm($id));
         }
 
         throw new ResourceClassNotSupportedException();
-
     }
 }
