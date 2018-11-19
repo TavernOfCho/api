@@ -48,3 +48,4 @@ services:
             $client_secret: '%env(BNET_CLIENT_SECRET)%'
             $kernelCacheDir: '%kernel.cache_dir%'
 
+    App\Utils\Pagerfanta: ~

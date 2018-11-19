@@ -134,6 +134,9 @@
     "nikic/php-parser": {
         "version": "v4.1.0"
     },
+    "pagerfanta/pagerfanta": {
+        "version": "v2.0.1"
+    },
     "php-cs-fixer/diff": {
         "version": "v1.2.0"
     },

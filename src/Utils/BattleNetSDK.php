@@ -62,12 +62,7 @@ class BattleNetSDK
                 ]
             ]);
 
-            $content = $this->getJsonContent($response);
-            $realms = $content['realms'];
-            $realms = array_combine(array_column($realms, 'name'), array_column($realms, 'slug'));
-
-            return $realms;
-
+            return $this->getJsonContent($response);
         }, 'realms', self::LONG_TIME);
     }
 
