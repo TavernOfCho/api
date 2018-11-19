@@ -41,3 +41,10 @@ services:
     App\DataProvider\UserSecurityItemDataProvider:
         arguments:
             $api_key: '%api_key%'
+
+    App\Utils\BattleNetSDK:
+        arguments:
+            $client_id: '%env(BNET_CLIENT_ID)%'
+            $client_secret: '%env(BNET_CLIENT_SECRET)%'
+            $kernelCacheDir: '%kernel.cache_dir%'
+
