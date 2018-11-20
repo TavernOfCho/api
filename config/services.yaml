@@ -49,3 +49,12 @@ services:
             $kernelCacheDir: '%kernel.cache_dir%'
 
     App\Utils\Pagerfanta: ~
+
+    App\DataProvider\BattleNet\Realm\RealmCollectionDataProvider:
+        arguments:
+            $transformer: App\DataTransformer\RealmTransformer
+            
+    App\DataProvider\BattleNet\Realm\RealmItemDataProvider:
+        arguments:
+            $transformer: App\DataTransformer\RealmTransformer            
+            

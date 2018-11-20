@@ -1,11 +1,11 @@
 App\Entity\User:
     itemOperations:
         get: ~
-        put: ~
-        delete: ~
+#        put: ~
+#        delete: ~
     collectionOperations:
-        get: ~
-        post: ~
+#        get: ~
+#        post: ~
         user_security:
             method: GET
             path: /users/security
@@ -15,8 +15,12 @@ App\Entity\User:
                 description: "Retrieve a user list with username, password and api_key filters"
             
 App\Entity\Realm:
-    attributes:
-        pagination_items_per_page: 25
+    itemOperations:
+        get: ~                    
+    collectionOperations:
+        get: ~
+
+App\Entity\Character:
     itemOperations:
         get: ~
     collectionOperations:

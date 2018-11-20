@@ -3,22 +3,9 @@
 namespace App\DataTransformer;
 
 use App\Entity\Realm;
-use Symfony\Component\PropertyAccess\PropertyAccess;
-use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
-class RealmTransformer
+class RealmTransformer extends AbstractTransformer
 {
-    /** @var PropertyAccessorInterface $propertyAccessor */
-    private $propertyAccessor;
-
-    /**
-     * RealmTransformer constructor.
-     */
-    public function __construct()
-    {
-        $this->propertyAccessor = PropertyAccess::createPropertyAccessorBuilder()->getPropertyAccessor();
-    }
-
     /**
      * @param $data
      * @return Realm
@@ -36,6 +23,10 @@ class RealmTransformer
         return $realm;
     }
 
+    /**
+     * @param $data
+     * @return array
+     */
     public function transformCollection($data)
     {
         $data = array_map(function ($data) {
