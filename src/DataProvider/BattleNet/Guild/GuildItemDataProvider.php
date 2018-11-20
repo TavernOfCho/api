@@ -7,7 +7,6 @@ use ApiPlatform\Core\Exception\ResourceClassNotSupportedException;
 use App\DataProvider\BattleNet\AbstractBattleNetDataProvider;
 use App\DataProvider\Traits\RealmFilterTrait;
 use App\DataTransformer\GuildTransformer;
-use App\Entity\Character;
 use App\Entity\Guild;
 
 /**

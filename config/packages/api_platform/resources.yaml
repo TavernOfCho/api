@@ -49,11 +49,6 @@ App\Entity\Achievement:
         
 App\Entity\Guild:
     itemOperations:
-        get:
-            controller: 'App\Controller\Api\BlankAction'
-            swagger_context:
-                summary: "Disabled action, will always return null"
-                description: "Disabled action, will always return null"
         character_guild:
             method: GET
             path: /characters/{id}/guild
