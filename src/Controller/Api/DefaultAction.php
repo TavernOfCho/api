@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controller\Api\Character;
+namespace App\Controller\Api;
 
-class CharacterAchievementsAction
+class DefaultAction
 {
     public function __invoke($data)
     {

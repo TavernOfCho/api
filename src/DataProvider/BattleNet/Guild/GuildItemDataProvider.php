@@ -1,20 +1,21 @@
 <?php
 
-namespace App\DataProvider\BattleNet\Character;
+namespace App\DataProvider\BattleNet\Guild;
 
 use ApiPlatform\Core\DataProvider\ItemDataProviderInterface;
 use ApiPlatform\Core\Exception\ResourceClassNotSupportedException;
 use App\DataProvider\BattleNet\AbstractBattleNetDataProvider;
 use App\DataProvider\Traits\RealmFilterTrait;
-use App\DataTransformer\CharacterTransformer;
+use App\DataTransformer\GuildTransformer;
 use App\Entity\Character;
+use App\Entity\Guild;
 
 /**
- * Class CharacterItemDataProvider
+ * Class GuildItemDataProvider
  * @author François MATHIEU <francois.mathieu@livexp.fr>
- * @property CharacterTransformer $transformer
+ * @property GuildTransformer $transformer
  */
-class CharacterItemDataProvider extends AbstractBattleNetDataProvider implements ItemDataProviderInterface
+class GuildItemDataProvider extends AbstractBattleNetDataProvider implements ItemDataProviderInterface
 {
     use RealmFilterTrait;
 
@@ -26,7 +27,7 @@ class CharacterItemDataProvider extends AbstractBattleNetDataProvider implements
      */
     public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
     {
-        return Character::class === $resourceClass;
+        return Guild::class === $resourceClass;
     }
 
     /**
@@ -36,14 +37,14 @@ class CharacterItemDataProvider extends AbstractBattleNetDataProvider implements
      * @param array|int|string $id
      * @param string|null $operationName
      * @param array $context
-     * @return Character
+     * @return Guild
      */
-    public function getItem(string $resourceClass, $id, string $operationName = null, array $context = []): ?Character
+    public function getItem(string $resourceClass, $id, string $operationName = null, array $context = []): ?Guild
     {
-        if ($operationName === 'get') {
+        if ($operationName === 'character_guild') {
             $realm = $this->getRealm();
 
-            return $this->transformer->transformItem($this->battleNetSDK->getCharacter($id, $realm));
+            return $this->transformer->transformItem($this->battleNetSDK->getCharacter($id, $realm, 'guild'));
         }
 
         throw new ResourceClassNotSupportedException();
