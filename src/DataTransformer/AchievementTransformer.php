@@ -4,7 +4,7 @@ namespace App\DataTransformer;
 
 use App\Entity\Achievement;
 
-class AchivementTransformer extends AbstractTransformer
+class AchievementTransformer extends AbstractTransformer
 {
     /**
      * @param $data

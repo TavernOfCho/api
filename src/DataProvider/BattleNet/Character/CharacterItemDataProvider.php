@@ -15,27 +15,6 @@ use App\Entity\Character;
  */
 class CharacterItemDataProvider extends AbstractBattleNetDataProvider implements ItemDataProviderInterface
 {
-    const ALLOWED_FIELDS = [
-        'achievements',
-        'appearance',
-        'feed',
-        'guild',
-        'hunterPets',
-        'items',
-        'mounts',
-        'pets',
-        'petSlots',
-        'professions',
-        'progression',
-        'pvp',
-        'quests',
-        'reputation',
-        'statistics',
-        'stats',
-        'talents',
-        'titles',
-        'audit',
-    ];
 
     /**
      * @param string $resourceClass
@@ -65,14 +44,9 @@ class CharacterItemDataProvider extends AbstractBattleNetDataProvider implements
                 return null;
             }
 
-            $fields = $this->getRequest()->query->get('fields');
             $realm = $this->getRequest()->query->get('realm');
 
-            return $this->transformer->transformItem(
-                $this->battleNetSDK->getCharacter($id, $realm, $fields),
-                $this->getPage(),
-                $this->getItemPerPage($resourceClass, $operationName)
-            );
+            return $this->transformer->transformItem($this->battleNetSDK->getCharacter($id, $realm));
         }
 
         throw new ResourceClassNotSupportedException();
@@ -97,27 +71,6 @@ class CharacterItemDataProvider extends AbstractBattleNetDataProvider implements
         // Missing filter
         if (!isset($filters['realm'])) {
             return null;
-        }
-
-        if (isset($filters['fields']) && (!empty($filters['fields']) && !$this->areFieldsAllowed($filters['fields']))) {
-            return null;
-        }
-
-        return true;
-    }
-
-    /**
-     * @param string $fields
-     * @return bool
-     */
-    private function areFieldsAllowed(string $fields)
-    {
-        $fields = explode(",", $fields);
-
-        foreach ($fields as $field) {
-            if (!in_array($field, self::ALLOWED_FIELDS)) {
-                return false;
-            }
         }
 
         return true;

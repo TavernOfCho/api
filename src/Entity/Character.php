@@ -11,6 +11,28 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Character
 {
+    const ALLOWED_FIELDS = [
+        'achievements',
+        'appearance',
+        'feed',
+        'guild',
+        'hunterPets',
+        'items',
+        'mounts',
+        'pets',
+        'petSlots',
+        'professions',
+        'progression',
+        'pvp',
+        'quests',
+        'reputation',
+        'statistics',
+        'stats',
+        'talents',
+        'titles',
+        'audit',
+    ];
+
     /**
      * @var \DateTime $lastModified
      */

@@ -111,7 +111,7 @@ class BattleNetSDK
      * @param string $id
      * @return mixed
      */
-    public function getAchivement(string $id)
+    public function getAchievement(string $id)
     {
         return $this->cacheHandle(function () use ($id) {
             $response = $this->client->request('GET', sprintf('/wow/achievement/%s', $id), [

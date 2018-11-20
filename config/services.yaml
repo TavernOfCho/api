@@ -62,3 +62,12 @@ services:
         arguments:
             $transformer: '@App\DataTransformer\CharacterTransformer'            
             
+    App\DataProvider\BattleNet\Achievement\AchievementCollectionDataProvider:
+        arguments:
+            $transformer: '@App\DataTransformer\AchievementTransformer'
+
+    App\DataProvider\BattleNet\Achievement\AchievementItemDataProvider:
+        arguments:
+            $transformer: '@App\DataTransformer\AchievementTransformer'            
+
+
