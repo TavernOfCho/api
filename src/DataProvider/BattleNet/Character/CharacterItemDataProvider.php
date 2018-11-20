@@ -32,7 +32,6 @@ class CharacterItemDataProvider extends AbstractBattleNetDataProvider implements
      *
      * @param string $resourceClass
      * @param array|int|string $id
-     *
      * @param string|null $operationName
      * @param array $context
      * @return Character

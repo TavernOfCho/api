@@ -197,4 +197,13 @@ class BattleNetSDK
 
         return $cacheContent->get();
     }
+
+    /**
+     * @param int $timestamp
+     * @return bool|string
+     */
+    public function formatTimestamp($timestamp)
+    {
+        return substr_replace((string)$timestamp, '', -3);
+    }
 }

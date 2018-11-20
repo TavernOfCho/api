@@ -57,6 +57,11 @@ class Achievement
     private $factionId;
 
     /**
+     * @var \DateTimeInterface $completedAt
+     */
+    private $completedAt;
+
+    /**
      * @return int|null
      */
     public function getId(): ?int
@@ -223,6 +228,29 @@ class Achievement
     public function setFactionId(int $factionId): self
     {
         $this->factionId = $factionId;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTimeInterface
+     */
+    public function getCompletedAt(): ?\DateTimeInterface
+    {
+        return $this->completedAt;
+    }
+
+    /**
+     * @param \DateTimeInterface|int $completedAt
+     * @return Achievement
+     */
+    public function setCompletedAt($completedAt): self
+    {
+        if (!$completedAt instanceof \DateTimeInterface) {
+            $completedAt = (new \DateTime())->setTimestamp($completedAt);
+        }
+
+        $this->completedAt = $completedAt;
 
         return $this;
     }
