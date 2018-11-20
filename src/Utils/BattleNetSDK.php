@@ -202,8 +202,17 @@ class BattleNetSDK
      * @param int $timestamp
      * @return bool|string
      */
-    public function formatTimestamp($timestamp)
+    public static function formatTimestamp($timestamp)
     {
         return substr_replace((string)$timestamp, '', -3);
+    }
+
+    /**
+     * @param $timestamp
+     * @return \DateTime
+     */
+    public static function timestampToDate($timestamp)
+    {
+        return (new \DateTime())->setTimestamp(self::formatTimestamp($timestamp));
     }
 }

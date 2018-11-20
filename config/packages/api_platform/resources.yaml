@@ -1,11 +1,7 @@
 App\Entity\User:
     itemOperations:
         get: ~
-#        put: ~
-#        delete: ~
     collectionOperations:
-#        get: ~
-#        post: ~
         user_security:
             method: GET
             path: /users/security
@@ -62,4 +58,25 @@ App\Entity\Guild:
             swagger_context:
                 summary: "Disabled action, will always return null"
                 description: "Disabled action, will always return null"
+
+App\Entity\Feed:
+    itemOperations:
+        get:
+            controller: 'App\Controller\Api\BlankAction'
+            swagger_context:
+                summary: "Disabled action, will always return null"
+                description: "Disabled action, will always return null"
+    collectionOperations:
+        get:
+            controller: 'App\Controller\Api\BlankAction'
+            swagger_context:
+                summary: "Disabled action, will always return null"
+                description: "Disabled action, will always return null"
+        character_feeds:
+            method: GET
+            path: /characters/{character}/feeds
+            controller: 'App\Controller\Api\DefaultAction'
+            swagger_context:
+                summary: "Retrieve a list of feed with specific filters for a character"
+                description: "Retrieve an achievement list with specific filters for a character"
         

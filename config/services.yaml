@@ -81,3 +81,12 @@ services:
     App\DataProvider\BattleNet\Guild\GuildItemDataProvider:
         arguments:
             $transformer: '@App\DataTransformer\GuildTransformer'            
+
+    # Feed
+
+    App\DataProvider\BattleNet\Feed\FeedCollectionDataProvider:
+        arguments:
+            $transformer: '@App\DataTransformer\FeedTransformer'            
+
+
+

@@ -33,8 +33,22 @@ abstract class AbstractTransformer implements TransformerInterface
      */
     protected function fillProperties($data, $object)
     {
+        return $this->fillPropertiesClosure($data, $object, function ($item) {
+            return $item;
+        });
+    }
+
+    /**
+     * @param $data
+     * @param $object
+     * @param \Closure $callback
+     * @return mixed
+     */
+    protected function fillPropertiesClosure($data, $object, \Closure $callback)
+    {
         foreach ($data as $key => $item) {
             if ($this->propertyAccessor->isReadable($object, $key)) {
+                $item = $callback($item, $key, $object);
                 $this->propertyAccessor->setValue($object, $key, $item);
             }
         }
