@@ -18,4 +18,29 @@ abstract class AbstractTransformer implements TransformerInterface
         $this->propertyAccessor = PropertyAccess::createPropertyAccessorBuilder()->getPropertyAccessor();
     }
 
+    /**
+     * @return PropertyAccessorInterface
+     */
+    public function getPropertyAccessor(): PropertyAccessorInterface
+    {
+        return $this->propertyAccessor;
+    }
+
+    /**
+     * @param $data
+     * @param $object
+     * @return mixed
+     */
+    protected function fillProperties($data, $object)
+    {
+        foreach ($data as $key => $item) {
+            if ($this->propertyAccessor->isReadable($object, $key)) {
+                $this->propertyAccessor->setValue($object, $key, $item);
+            }
+        }
+
+        return $object;
+    }
+
+
 }

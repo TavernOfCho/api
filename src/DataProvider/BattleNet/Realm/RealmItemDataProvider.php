@@ -3,12 +3,11 @@
 namespace App\DataProvider\BattleNet\Realm;
 
 use ApiPlatform\Core\DataProvider\ItemDataProviderInterface;
-use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
 use ApiPlatform\Core\Exception\ResourceClassNotSupportedException;
-use App\DataProvider\BattleNet\BattleNetItemDataProvider;
+use App\DataProvider\BattleNet\AbstractBattleNetDataProvider;
 use App\Entity\Realm;
 
-class RealmItemDataProvider extends BattleNetItemDataProvider
+class RealmItemDataProvider extends AbstractBattleNetDataProvider implements ItemDataProviderInterface
 {
     /**
      * @param string $resourceClass

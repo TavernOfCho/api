@@ -2,7 +2,6 @@
 
 namespace App\DataProvider\BattleNet;
 
-use ApiPlatform\Core\DataProvider\CollectionDataProviderInterface;
 use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
 use ApiPlatform\Core\Metadata\Resource\Factory\ResourceMetadataFactoryInterface;
 use App\DataTransformer\TransformerInterface;
@@ -12,7 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Pagerfanta\Adapter\DoctrineCollectionAdapter;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-abstract class BattleNetCollectionDataProvider implements CollectionDataProviderInterface, RestrictedDataProviderInterface
+abstract class AbstractBattleNetDataProvider implements RestrictedDataProviderInterface
 {
     /** @var BattleNetSDK $battleNetSDK */
     protected $battleNetSDK;
@@ -51,18 +50,42 @@ abstract class BattleNetCollectionDataProvider implements CollectionDataProvider
      */
     protected function paginate(ArrayCollection $collection, string $resourceClass, string $operationName = null)
     {
-        $resourceMetadata = $this->resourceMetadataFactory->create($resourceClass);
-        $itemsPerPage = $resourceMetadata
-            ->getCollectionOperationAttribute($operationName, 'pagination_items_per_page', 30, true);
-
-        $request = $this->requestStack->getCurrentRequest();
+        $itemsPerPage = $this->getItemPerPage($resourceClass, $operationName);
 
         $adapter = new DoctrineCollectionAdapter($collection);
         $pagerfanta = new Pagerfanta($adapter);
 
         $pagerfanta->setMaxPerPage($itemsPerPage);
-        $pagerfanta->setCurrentPage($request->query->getInt('page', 1));
+        $pagerfanta->setCurrentPage($this->getPage());
 
         return $pagerfanta;
+    }
+
+    /**
+     * @param string $resourceClass
+     * @param string $operationName
+     * @return int|null
+     */
+    protected function getItemPerPage(string $resourceClass, string $operationName)
+    {
+        $resourceMetadata = $this->resourceMetadataFactory->create($resourceClass);
+
+        return $resourceMetadata->getCollectionOperationAttribute($operationName, 'pagination_items_per_page', 30, true);
+    }
+
+    /**
+     * @return int
+     */
+    protected function getPage()
+    {
+        return $this->getRequest()->query->getInt('page', 1);
+    }
+
+    /**
+     * @return null|\Symfony\Component\HttpFoundation\Request
+     */
+    protected function getRequest()
+    {
+        return $this->requestStack->getCurrentRequest();
     }
 }

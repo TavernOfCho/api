@@ -2,15 +2,16 @@
 
 namespace App\DataProvider\BattleNet\Realm;
 
+use ApiPlatform\Core\DataProvider\CollectionDataProviderInterface;
 use ApiPlatform\Core\Exception\ResourceClassNotSupportedException;
-use App\DataProvider\BattleNet\BattleNetCollectionDataProvider;
+use App\DataProvider\BattleNet\AbstractBattleNetDataProvider;
 use App\Entity\Realm;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Class RealmCollectionDataProvider
  */
-class RealmCollectionDataProvider extends BattleNetCollectionDataProvider
+class RealmCollectionDataProvider extends AbstractBattleNetDataProvider implements CollectionDataProviderInterface
 {
     /**
      * @param string $resourceClass

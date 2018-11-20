@@ -24,4 +24,19 @@ App\Entity\Character:
     itemOperations:
         get: ~
     collectionOperations:
+        get:
+            controller: 'App\Controller\Api\BlankAction'
+            swagger_context:
+                summary: "Disabled action, will always return null"
+                description: "Disabled action, will always return null"
+        
+App\Entity\Achievement:
+    itemOperations:
         get: ~
+    collectionOperations:
+        get:
+            controller: 'App\Controller\Api\BlankAction'
+            swagger_context:
+                summary: "Disabled action, will always return null"
+                description: "Disabled action, will always return null"
+        

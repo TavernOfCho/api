@@ -85,6 +85,46 @@ class BattleNetSDK
         }, sprintf('realm_%s', $slug), self::LONG_TIME);
     }
 
+    /**
+     * @param string $name
+     * @param string $realm
+     * @param string|null $fields
+     * @return array
+     */
+    public function getCharacter(string $name, string $realm, string $fields = null)
+    {
+        return $this->cacheHandle(function () use ($name, $realm, $fields) {
+            $response = $this->client->request('GET', sprintf('/wow/character/%s/%s', $realm, $name), [
+                'query' => [
+                    'region' => 'eu',
+                    'fields' => $fields,
+                    'locale' => 'fr_FR',
+                    'access_token' => $this->getAccessToken()
+                ]
+            ]);
+
+            return $this->getJsonContent($response);
+        }, sprintf('character_%s_%s_%s', $realm, $name, $fields), self::SHORT_TIME);
+    }
+
+    /**
+     * @param string $id
+     * @return mixed
+     */
+    public function getAchivement(string $id)
+    {
+        return $this->cacheHandle(function () use ($id) {
+            $response = $this->client->request('GET', sprintf('/wow/achievement/%s', $id), [
+                'query' => [
+                    'region' => 'eu',
+                    'locale' => 'fr_FR',
+                    'access_token' => $this->getAccessToken()
+                ]
+            ]);
+
+            return $this->getJsonContent($response);
+        }, sprintf('achievement_%s', $id), self::LONG_TIME);
+    }
 
     /**
      * @return string

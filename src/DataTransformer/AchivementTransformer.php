@@ -2,23 +2,19 @@
 
 namespace App\DataTransformer;
 
-use App\Entity\Realm;
+use App\Entity\Achievement;
 
-class RealmTransformer extends AbstractTransformer
+class AchivementTransformer extends AbstractTransformer
 {
     /**
      * @param $data
-     * @return Realm
+     * @return Achievement
      */
     public function transformItem($data)
     {
-        return $this->fillProperties($data, new Realm());
+        return $this->fillProperties($data, new Achievement());
     }
 
-    /**
-     * @param $data
-     * @return array
-     */
     public function transformCollection($data)
     {
         $data = array_map(function ($data) {
