@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ApiResource()
@@ -98,19 +97,6 @@ class Character
      * @var int $totalHonorableKills
      */
     private $totalHonorableKills;
-
-    /**
-     * @var ArrayCollection $achievements
-     */
-    private $achievements;
-
-    /**
-     * Character constructor.
-     */
-    public function __construct()
-    {
-        $this->achievements = new ArrayCollection();
-    }
 
     /**
      * @return \DateTimeInterface|null
@@ -359,25 +345,6 @@ class Character
     public function setTotalHonorableKills(int $totalHonorableKills): self
     {
         $this->totalHonorableKills = $totalHonorableKills;
-
-        return $this;
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getAchievements(): ?ArrayCollection
-    {
-        return $this->achievements;
-    }
-
-    /**
-     * @param ArrayCollection $achievements
-     * @return Character
-     */
-    public function setAchievements(ArrayCollection $achievements): self
-    {
-        $this->achievements = $achievements;
 
         return $this;
     }
