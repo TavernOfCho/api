@@ -52,6 +52,7 @@ security:
     # API basic path
     - { path: ^/index, role: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/docs, role: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/contexts, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 
     # API specific cases
     - { path: ^/users/security, role: IS_AUTHENTICATED_ANONYMOUSLY, methods:[GET] }
