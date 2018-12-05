@@ -25,20 +25,31 @@ abstract class AbstractBattleNetDataProvider implements RestrictedDataProviderIn
     /** @var ResourceMetadataFactoryInterface $resourceMetadataFactory */
     protected $resourceMetadataFactory;
 
+    public $model;
+
     /**
      * BattleNetCollectionDataProvider constructor.
      * @param BattleNetSDK $battleNetSDK
-     * @param TransformerInterface $transformer
      * @param RequestStack $requestStack
      * @param ResourceMetadataFactoryInterface $resourceMetadataFactory
      */
-    public function __construct(BattleNetSDK $battleNetSDK, TransformerInterface $transformer,
+    public function __construct(BattleNetSDK $battleNetSDK,
                                 RequestStack $requestStack, ResourceMetadataFactoryInterface $resourceMetadataFactory)
     {
         $this->battleNetSDK = $battleNetSDK;
-        $this->transformer = $transformer;
         $this->requestStack = $requestStack;
         $this->resourceMetadataFactory = $resourceMetadataFactory;
+    }
+
+    /**
+     * @param string $resourceClass
+     * @param string|null $operationName
+     * @param array $context
+     * @return bool
+     */
+    public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
+    {
+        return $this->model === $resourceClass;
     }
 
     /**
@@ -88,4 +99,24 @@ abstract class AbstractBattleNetDataProvider implements RestrictedDataProviderIn
     {
         return $this->requestStack->getCurrentRequest();
     }
+
+    /**
+     * @return TransformerInterface
+     */
+    public function getTransformer(): TransformerInterface
+    {
+        return $this->transformer;
+    }
+
+    /**
+     * @param TransformerInterface $transformer
+     * @return AbstractBattleNetDataProvider
+     */
+    public function setTransformer(TransformerInterface $transformer): self
+    {
+        $this->transformer = $transformer;
+
+        return $this;
+    }
+
 }

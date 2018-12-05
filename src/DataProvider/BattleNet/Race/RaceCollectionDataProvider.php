@@ -5,24 +5,17 @@ namespace App\DataProvider\BattleNet\Race;
 use ApiPlatform\Core\DataProvider\CollectionDataProviderInterface;
 use ApiPlatform\Core\Exception\ResourceClassNotSupportedException;
 use App\DataProvider\BattleNet\AbstractBattleNetDataProvider;
+use App\DataTransformer\RaceTransformer;
 use App\Entity\Race;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Class RaceCollectionDataProvider
+ * @property RaceTransformer $transformer
  */
 class RaceCollectionDataProvider extends AbstractBattleNetDataProvider implements CollectionDataProviderInterface
 {
-    /**
-     * @param string $resourceClass
-     * @param string|null $operationName
-     * @param array $context
-     * @return bool
-     */
-    public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
-    {
-        return Race::class === $resourceClass;
-    }
+    public $model= Race::class;
 
     /**
      * @param string $resourceClass

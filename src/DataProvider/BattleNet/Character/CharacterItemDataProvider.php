@@ -11,23 +11,13 @@ use App\Entity\Character;
 
 /**
  * Class CharacterItemDataProvider
- * @author François MATHIEU <francois.mathieu@livexp.fr>
  * @property CharacterTransformer $transformer
  */
 class CharacterItemDataProvider extends AbstractBattleNetDataProvider implements ItemDataProviderInterface
 {
     use RealmFilterTrait;
 
-    /**
-     * @param string $resourceClass
-     * @param string|null $operationName
-     * @param array $context
-     * @return bool
-     */
-    public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
-    {
-        return Character::class === $resourceClass;
-    }
+    public $model= Character::class;
 
     /**
      * Retrieves an item.

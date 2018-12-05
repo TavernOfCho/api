@@ -18,16 +18,7 @@ class FeedCollectionDataProvider extends AbstractBattleNetDataProvider implement
 {
     use RealmFilterTrait;
 
-    /**
-     * @param string $resourceClass
-     * @param string|null $operationName
-     * @param array $context
-     * @return bool
-     */
-    public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
-    {
-        return Feed::class === $resourceClass;
-    }
+    public $model= Feed::class;
 
     /**
      * @param string $resourceClass

@@ -18,16 +18,7 @@ class AchievementCollectionDataProvider extends AbstractBattleNetDataProvider im
 {
     use RealmFilterTrait;
 
-    /**
-     * @param string $resourceClass
-     * @param string|null $operationName
-     * @param array $context
-     * @return bool
-     */
-    public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
-    {
-        return Achievement::class === $resourceClass;
-    }
+    public $model= Achievement::class;
 
     /**
      * @param string $resourceClass

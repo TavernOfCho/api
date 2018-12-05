@@ -5,20 +5,16 @@ namespace App\DataProvider\BattleNet\Realm;
 use ApiPlatform\Core\DataProvider\ItemDataProviderInterface;
 use ApiPlatform\Core\Exception\ResourceClassNotSupportedException;
 use App\DataProvider\BattleNet\AbstractBattleNetDataProvider;
+use App\DataTransformer\RealmTransformer;
 use App\Entity\Realm;
 
+/**
+ * Class RealmItemDataProvider
+ * @property RealmTransformer $transformer
+ */
 class RealmItemDataProvider extends AbstractBattleNetDataProvider implements ItemDataProviderInterface
 {
-    /**
-     * @param string $resourceClass
-     * @param string|null $operationName
-     * @param array $context
-     * @return bool
-     */
-    public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
-    {
-        return Realm::class === $resourceClass;
-    }
+    public $model = Realm::class;
 
     /**
      * Retrieves an item.
@@ -38,4 +34,11 @@ class RealmItemDataProvider extends AbstractBattleNetDataProvider implements Ite
 
         throw new ResourceClassNotSupportedException();
     }
+
+    public function configure()
+    {
+        $this->setTransformer(new RealmTransformer());
+    }
+
+
 }

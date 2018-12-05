@@ -5,24 +5,17 @@ namespace App\DataProvider\BattleNet\Realm;
 use ApiPlatform\Core\DataProvider\CollectionDataProviderInterface;
 use ApiPlatform\Core\Exception\ResourceClassNotSupportedException;
 use App\DataProvider\BattleNet\AbstractBattleNetDataProvider;
+use App\DataTransformer\RealmTransformer;
 use App\Entity\Realm;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Class RealmCollectionDataProvider
+ * @property RealmTransformer $transformer
  */
 class RealmCollectionDataProvider extends AbstractBattleNetDataProvider implements CollectionDataProviderInterface
 {
-    /**
-     * @param string $resourceClass
-     * @param string|null $operationName
-     * @param array $context
-     * @return bool
-     */
-    public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
-    {
-        return Realm::class === $resourceClass;
-    }
+    public $model= Realm::class;
 
     /**
      * @param string $resourceClass

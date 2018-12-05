@@ -49,54 +49,7 @@ services:
             $kernelCacheDir: '%kernel.cache_dir%'
 
     App\Utils\Pagerfanta: ~
-    
-    # Realm
-    
-    App\DataProvider\BattleNet\Realm\RealmCollectionDataProvider:
-        arguments:
-            $transformer: '@App\DataTransformer\RealmTransformer'
-            
-    App\DataProvider\BattleNet\Realm\RealmItemDataProvider:
-        arguments:
-            $transformer: '@App\DataTransformer\RealmTransformer'            
-            
-    # Character
 
-    App\DataProvider\BattleNet\Character\CharacterItemDataProvider:
-        arguments:
-            $transformer: '@App\DataTransformer\CharacterTransformer'            
-            
-    # Achievement
-    
-    App\DataProvider\BattleNet\Achievement\AchievementCollectionDataProvider:
-        arguments:
-            $transformer: '@App\DataTransformer\AchievementTransformer'
-
-    App\DataProvider\BattleNet\Achievement\AchievementItemDataProvider:
-        arguments:
-            $transformer: '@App\DataTransformer\AchievementTransformer'            
-
-    # Guild
-
-    App\DataProvider\BattleNet\Guild\GuildItemDataProvider:
-        arguments:
-            $transformer: '@App\DataTransformer\GuildTransformer'            
-
-    # Feed
-
-    App\DataProvider\BattleNet\Feed\FeedCollectionDataProvider:
-        arguments:
-            $transformer: '@App\DataTransformer\FeedTransformer'            
-
-    # Classes
-
-    App\DataProvider\BattleNet\Classes\ClassesCollectionDataProvider:
-        arguments:
-            $transformer: '@App\DataTransformer\ClassesTransformer'
-
-    # Race
-
-    App\DataProvider\BattleNet\Race\RaceCollectionDataProvider:
-        arguments:
-            $transformer: '@App\DataTransformer\RaceTransformer'
-
+    App\DataProvider\BattleNet\:
+      resource: '../src/DataProvider/BattleNet'
+      configurator: 'App\DataProvider\BattleNetDataProviderConfigurator:configure'
