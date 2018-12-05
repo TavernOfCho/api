@@ -108,6 +108,43 @@ class BattleNetSDK
     }
 
     /**
+     * @return array
+     */
+    public function getCharacterClasses()
+    {
+        return $this->cacheHandle(function () {
+            $response = $this->client->request('GET', '/wow/data/character/classes', [
+                'query' => [
+                    'region' => 'eu',
+                    'locale' => 'fr_FR',
+                    'access_token' => $this->getAccessToken()
+                ]
+            ]);
+
+            return $this->getJsonContent($response);
+        }, 'character_classes', self::LONG_TIME);
+    }
+
+    /**
+     * @return array
+     */
+    public function getCharacterRaces()
+    {
+        return $this->cacheHandle(function () {
+            $response = $this->client->request('GET', '/wow/data/character/races', [
+                'query' => [
+                    'region' => 'eu',
+                    'locale' => 'fr_FR',
+                    'access_token' => $this->getAccessToken()
+                ]
+            ]);
+
+            return $this->getJsonContent($response);
+        }, 'character_races', self::LONG_TIME);
+    }
+
+
+    /**
      * @param string $id
      * @return mixed
      */

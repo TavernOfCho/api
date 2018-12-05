@@ -88,5 +88,9 @@ services:
         arguments:
             $transformer: '@App\DataTransformer\FeedTransformer'            
 
+    # Classes
 
+    App\DataProvider\BattleNet\Classes\ClassesCollectionDataProvider:
+        arguments:
+            $transformer: '@App\DataTransformer\ClassesTransformer'
 
