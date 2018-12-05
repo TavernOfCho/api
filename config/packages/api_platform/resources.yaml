@@ -89,3 +89,13 @@ App\Entity\Classes:
                 description: "Disabled action, will always return null"
     collectionOperations:
         get: ~
+
+App\Entity\Race:
+    itemOperations:
+        get:
+            controller: 'App\Controller\Api\BlankAction'
+            swagger_context:
+                summary: "Disabled action, will always return null"
+                description: "Disabled action, will always return null"
+    collectionOperations:
+        get: ~

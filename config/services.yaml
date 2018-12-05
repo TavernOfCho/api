@@ -94,3 +94,9 @@ services:
         arguments:
             $transformer: '@App\DataTransformer\ClassesTransformer'
 
+    # Race
+
+    App\DataProvider\BattleNet\Race\RaceCollectionDataProvider:
+        arguments:
+            $transformer: '@App\DataTransformer\RaceTransformer'
+

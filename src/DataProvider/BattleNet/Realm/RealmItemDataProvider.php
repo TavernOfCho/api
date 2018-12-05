@@ -33,7 +33,7 @@ class RealmItemDataProvider extends AbstractBattleNetDataProvider implements Ite
     public function getItem(string $resourceClass, $id, string $operationName = null, array $context = []): ?Realm
     {
         if ($operationName === 'get') {
-            return $this->transformer->transformItem($this->battleNetSDK->getRealm($id));
+            return $this->transformer->transformItem($this->battleNetSDK->getRealm(strtolower($id)));
         }
 
         throw new ResourceClassNotSupportedException();
