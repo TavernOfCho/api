@@ -74,6 +74,9 @@
     "doctrine/reflection": {
         "version": "v1.0.0"
     },
+    "e-moe/guzzle6-bundle": {
+        "version": "v1.2.3"
+    },
     "easyrdf/easyrdf": {
         "version": "0.9.1"
     },

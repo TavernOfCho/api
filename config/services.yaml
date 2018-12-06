@@ -42,11 +42,17 @@ services:
         arguments:
             $api_key: '%api_key%'
 
+    GuzzleHttp\Client:
+        arguments:
+            - { base_uri: 'https://eu.api.blizzard.com/', timeout: 30 }
+        tags:
+            - { name: guzzle.client }
+
     App\Utils\BattleNetSDK:
         arguments:
             $client_id: '%env(BNET_CLIENT_ID)%'
             $client_secret: '%env(BNET_CLIENT_SECRET)%'
-            $kernelCacheDir: '%kernel.cache_dir%'
+            $cacheManager: '@cache.battle_net' # See framework.yaml and cache.battle_net pool
 
     App\Utils\Pagerfanta: ~
 

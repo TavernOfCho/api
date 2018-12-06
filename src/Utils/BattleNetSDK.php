@@ -3,6 +3,7 @@
 namespace App\Utils;
 
 use GuzzleHttp\Client;
+use Psr\Cache\CacheItemPoolInterface;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -31,21 +32,18 @@ class BattleNetSDK
      * BattleNetSDK constructor.
      * @param string $client_id
      * @param string $client_secret
-     * @param string $kernelCacheDir
      * @param SessionInterface $session
+     * @param CacheItemPoolInterface $cacheManager
+     * @param Client $client
      */
-    public function __construct(string $client_id, string $client_secret, string $kernelCacheDir,
-                                SessionInterface $session)
+    public function __construct(string $client_id, string $client_secret, SessionInterface $session,
+                                CacheItemPoolInterface $cacheManager, Client $client)
     {
-        $this->client = new Client([
-            'base_uri' => 'https://eu.api.blizzard.com/',
-            'timeout' => 10,
-        ]);
-
+        $this->client = $client;
         $this->client_id = $client_id;
         $this->client_secret = $client_secret;
         $this->session = $session;
-        $this->cacheManager = new FilesystemAdapter("BattleNetSDK", self::SHORT_TIME, $kernelCacheDir);
+        $this->cacheManager = $cacheManager;
     }
 
     /**
