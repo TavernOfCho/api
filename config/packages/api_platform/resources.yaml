@@ -80,3 +80,22 @@ App\Entity\Feed:
                 summary: "Retrieve a list of feed with specific filters for a character"
                 description: "Retrieve an achievement list with specific filters for a character"
         
+App\Entity\Classes:
+    itemOperations:
+        get:
+            controller: 'App\Controller\Api\BlankAction'
+            swagger_context:
+                summary: "Disabled action, will always return null"
+                description: "Disabled action, will always return null"
+    collectionOperations:
+        get: ~
+
+App\Entity\Race:
+    itemOperations:
+        get:
+            controller: 'App\Controller\Api\BlankAction'
+            swagger_context:
+                summary: "Disabled action, will always return null"
+                description: "Disabled action, will always return null"
+    collectionOperations:
+        get: ~

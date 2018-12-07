@@ -1,21 +1,21 @@
 <?php
 
-namespace App\DataProvider\BattleNet\Realm;
+namespace App\DataProvider\BattleNet\Race;
 
 use ApiPlatform\Core\DataProvider\CollectionDataProviderInterface;
 use ApiPlatform\Core\Exception\ResourceClassNotSupportedException;
 use App\DataProvider\BattleNet\AbstractBattleNetDataProvider;
-use App\DataTransformer\RealmTransformer;
-use App\Entity\Realm;
+use App\DataTransformer\RaceTransformer;
+use App\Entity\Race;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Class RealmCollectionDataProvider
- * @property RealmTransformer $transformer
+ * Class RaceCollectionDataProvider
+ * @property RaceTransformer $transformer
  */
-class RealmCollectionDataProvider extends AbstractBattleNetDataProvider implements CollectionDataProviderInterface
+class RaceCollectionDataProvider extends AbstractBattleNetDataProvider implements CollectionDataProviderInterface
 {
-    public $model= Realm::class;
+    public $model= Race::class;
 
     /**
      * @param string $resourceClass
@@ -25,12 +25,10 @@ class RealmCollectionDataProvider extends AbstractBattleNetDataProvider implemen
     public function getCollection(string $resourceClass, string $operationName = null)
     {
         if ($operationName === 'get') {
-            $realms = $this->battleNetSDK->getRealms();
-            $realms = array_map(function ($realm) {
-                return $this->battleNetSDK->getRealm($realm['slug']);
-            }, $realms['realms']);
+            $races = $this->battleNetSDK->getCharacterRaces();
+            $races = $races['races'];
 
-            $data = $this->transformer->transformCollection($realms);
+            $data = $this->transformer->transformCollection($races);
             $collection = new ArrayCollection($data);
 
             return $this->paginate($collection, $resourceClass, $operationName);

@@ -11,23 +11,13 @@ use App\Entity\Guild;
 
 /**
  * Class GuildItemDataProvider
- * @author François MATHIEU <francois.mathieu@livexp.fr>
  * @property GuildTransformer $transformer
  */
 class GuildItemDataProvider extends AbstractBattleNetDataProvider implements ItemDataProviderInterface
 {
     use RealmFilterTrait;
 
-    /**
-     * @param string $resourceClass
-     * @param string|null $operationName
-     * @param array $context
-     * @return bool
-     */
-    public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
-    {
-        return Guild::class === $resourceClass;
-    }
+    public $model= Guild::class;
 
     /**
      * Retrieves an item.

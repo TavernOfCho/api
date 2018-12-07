@@ -3,6 +3,7 @@
 namespace App\Utils;
 
 use GuzzleHttp\Client;
+use Psr\Cache\CacheItemPoolInterface;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -31,21 +32,18 @@ class BattleNetSDK
      * BattleNetSDK constructor.
      * @param string $client_id
      * @param string $client_secret
-     * @param string $kernelCacheDir
      * @param SessionInterface $session
+     * @param CacheItemPoolInterface $cacheManager
+     * @param Client $client
      */
-    public function __construct(string $client_id, string $client_secret, string $kernelCacheDir,
-                                SessionInterface $session)
+    public function __construct(string $client_id, string $client_secret, SessionInterface $session,
+                                CacheItemPoolInterface $cacheManager, Client $client)
     {
-        $this->client = new Client([
-            'base_uri' => 'https://eu.api.blizzard.com/',
-            'timeout' => 10,
-        ]);
-
+        $this->client = $client;
         $this->client_id = $client_id;
         $this->client_secret = $client_secret;
         $this->session = $session;
-        $this->cacheManager = new FilesystemAdapter("BattleNetSDK", self::SHORT_TIME, $kernelCacheDir);
+        $this->cacheManager = $cacheManager;
     }
 
     /**
@@ -106,6 +104,43 @@ class BattleNetSDK
             return $this->getJsonContent($response);
         }, sprintf('character_%s_%s_%s', $realm, $name, $fields), self::SHORT_TIME);
     }
+
+    /**
+     * @return array
+     */
+    public function getCharacterClasses()
+    {
+        return $this->cacheHandle(function () {
+            $response = $this->client->request('GET', '/wow/data/character/classes', [
+                'query' => [
+                    'region' => 'eu',
+                    'locale' => 'fr_FR',
+                    'access_token' => $this->getAccessToken()
+                ]
+            ]);
+
+            return $this->getJsonContent($response);
+        }, 'character_classes', self::LONG_TIME);
+    }
+
+    /**
+     * @return array
+     */
+    public function getCharacterRaces()
+    {
+        return $this->cacheHandle(function () {
+            $response = $this->client->request('GET', '/wow/data/character/races', [
+                'query' => [
+                    'region' => 'eu',
+                    'locale' => 'fr_FR',
+                    'access_token' => $this->getAccessToken()
+                ]
+            ]);
+
+            return $this->getJsonContent($response);
+        }, 'character_races', self::LONG_TIME);
+    }
+
 
     /**
      * @param string $id

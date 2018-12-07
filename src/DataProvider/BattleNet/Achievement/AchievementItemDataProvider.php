@@ -5,20 +5,16 @@ namespace App\DataProvider\BattleNet\Achievement;
 use ApiPlatform\Core\DataProvider\ItemDataProviderInterface;
 use ApiPlatform\Core\Exception\ResourceClassNotSupportedException;
 use App\DataProvider\BattleNet\AbstractBattleNetDataProvider;
+use App\DataTransformer\AchievementTransformer;
 use App\Entity\Achievement;
 
+/**
+ * Class AchievementItemDataProvider
+ * @property AchievementTransformer $transformer
+ */
 class AchievementItemDataProvider extends AbstractBattleNetDataProvider implements ItemDataProviderInterface
 {
-    /**
-     * @param string $resourceClass
-     * @param string|null $operationName
-     * @param array $context
-     * @return bool
-     */
-    public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
-    {
-        return Achievement::class === $resourceClass;
-    }
+    public $model= Achievement::class;
 
     /**
      * Retrieves an item.

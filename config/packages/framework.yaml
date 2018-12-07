@@ -15,6 +15,9 @@ framework:
         log: true
 
     cache:
+        pools:
+            cache.battle_net:
+                default_lifetime: 3600
         # The app cache caches to the filesystem by default. Other options include:
 
         # Redis

@@ -79,9 +79,9 @@ class Character
     private $achievementPoints;
 
     /**
-     * @var string $thumbail
+     * @var string $thumbnail
      */
-    private $thumbail;
+    private $thumbnail;
 
     /**
      * @var string $calcClass
@@ -276,18 +276,18 @@ class Character
     /**
      * @return null|string
      */
-    public function getThumbail(): ?string
+    public function getThumbnail(): ?string
     {
-        return $this->thumbail;
+        return $this->thumbnail;
     }
 
     /**
-     * @param string $thumbail
+     * @param string $thumbnail
      * @return Character
      */
-    public function setThumbail(string $thumbail): self
+    public function setThumbnail(string $thumbnail): self
     {
-        $this->thumbail = $thumbail;
+        $this->thumbnail = $thumbnail;
 
         return $this;
     }
