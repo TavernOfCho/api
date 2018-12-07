@@ -5,7 +5,7 @@ namespace App\DataProvider;
 use App\DataProvider\BattleNet\AbstractBattleNetDataProvider;
 use App\DataTransformer\DefaultTransformer;
 use Psr\Container\ContainerInterface;
-use Symfony\Component\DependencyInjection\ServiceSubscriberInterface;
+use Symfony\Contracts\Service\ServiceSubscriberInterface;
 use Symfony\Component\Finder\Finder;
 
 class BattleNetDataProviderConfigurator implements ServiceSubscriberInterface
