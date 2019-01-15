@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
  * Class UserSecurityItemDataProvider
  * @package App\DataProvider
  */
-final class UserSecurityItemDataProvider implements CollectionDataProviderInterface, RestrictedDataProviderInterface
+final class UserSecurityCollectionDataProvider implements CollectionDataProviderInterface, RestrictedDataProviderInterface
 {
     /** @var ObjectManager $manager */
     private $manager;
