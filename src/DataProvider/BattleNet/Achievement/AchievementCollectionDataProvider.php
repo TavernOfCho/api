@@ -6,13 +6,13 @@ use ApiPlatform\Core\DataProvider\CollectionDataProviderInterface;
 use ApiPlatform\Core\Exception\ResourceClassNotSupportedException;
 use App\DataProvider\BattleNet\AbstractBattleNetDataProvider;
 use App\DataProvider\Traits\RealmFilterTrait;
-use App\DataTransformer\AchievementTransformer;
+use App\DataTransformer\ItemsTransformer;
 use App\Entity\Achievement;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Class AchievementCollectionDataProvider
- * @property AchievementTransformer $transformer
+ * @property ItemsTransformer $transformer
  */
 class AchievementCollectionDataProvider extends AbstractBattleNetDataProvider implements CollectionDataProviderInterface
 {

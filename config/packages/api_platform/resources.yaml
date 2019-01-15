@@ -99,3 +99,20 @@ App\Entity\Race:
                 description: "Disabled action, will always return null"
     collectionOperations:
         get: ~
+
+
+App\Entity\Items:
+    itemOperations:
+        character_items:
+            method: GET
+            path: /characters/{id}/items
+            controller: 'App\Controller\Api\DefaultAction'
+            swagger_context:
+                summary: "Retrieve items with specific filters for a character"
+                description: "Retrieve items with specific filters for a character"
+    collectionOperations:
+        get:
+            controller: 'App\Controller\Api\BlankAction'
+            swagger_context:
+                summary: "Disabled action, will always return null"
+                description: "Disabled action, will always return null"
