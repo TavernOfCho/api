@@ -41,6 +41,9 @@ services:
     App\DataProvider\UserSecurityCollectionDataProvider:
         arguments:
             $api_key: '%api_key%'
+        tags:
+          - { name: 'api_platform.collection_data_provider', priority: 2 } # Temporary fix to have priority (https://github.com/api-platform/core/issues/2357)
+
 
     GuzzleHttp\Client:
         arguments:
