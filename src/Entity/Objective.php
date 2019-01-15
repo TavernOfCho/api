@@ -55,7 +55,7 @@ class Objective
     private $mail_sent;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="objectives")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
      */
     private $bnet_user;
 
