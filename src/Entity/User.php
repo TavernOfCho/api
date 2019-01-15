@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -61,6 +63,26 @@ class User implements UserInterface
      * @var string $plainPassword
      */
     private $plainPassword;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $email;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default" : false})
+     */
+    private $email_enabled = false;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Objective", mappedBy="bnet_user")
+     */
+    private $objectives;
+
+    public function __construct()
+    {
+        $this->objectives = new ArrayCollection();
+    }
 
     /**
      * @return int|null
@@ -238,12 +260,77 @@ class User implements UserInterface
         return $this;
     }
 
-
-    /**
-     * @return null
-     */
     public function eraseCredentials()
     {
         $this->plainPassword = null;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     * @return User
+     */
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getEmailEnabled(): ?bool
+    {
+        return $this->email_enabled;
+    }
+
+    /**
+     * @param bool $email_enabled
+     * @return User
+     */
+    public function setEmailEnabled(bool $email_enabled): self
+    {
+        $this->email_enabled = $email_enabled;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Objective[]
+     */
+    public function getObjectives(): Collection
+    {
+        return $this->objectives;
+    }
+
+    public function addObjective(Objective $objective): self
+    {
+        if (!$this->objectives->contains($objective)) {
+            $this->objectives[] = $objective;
+            $objective->setBnetUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeObjective(Objective $objective): self
+    {
+        if ($this->objectives->contains($objective)) {
+            $this->objectives->removeElement($objective);
+            // set the owning side to null (unless already changed)
+            if ($objective->getBnetUser() === $this) {
+                $objective->setBnetUser(null);
+            }
+        }
+
+        return $this;
     }
 }
