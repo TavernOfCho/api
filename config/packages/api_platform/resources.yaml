@@ -116,3 +116,19 @@ App\Entity\Items:
             swagger_context:
                 summary: "Disabled action, will always return null"
                 description: "Disabled action, will always return null"
+
+App\Entity\Stats:
+    itemOperations:
+        character_stats:
+            method: GET
+            path: /characters/{id}/stats
+            controller: 'App\Controller\Api\DefaultAction'
+            swagger_context:
+                summary: "Retrieve stats with specific filters for a character"
+                description: "Retrieve stats with specific filters for a character"
+    collectionOperations:
+        get:
+            controller: 'App\Controller\Api\BlankAction'
+            swagger_context:
+                summary: "Disabled action, will always return null"
+                description: "Disabled action, will always return null"
