@@ -162,6 +162,25 @@ class BattleNetSDK
     }
 
     /**
+     * @param int $factionId
+     * @return array
+     */
+    public function getAchievements(int $factionId): array
+    {
+        return $this->cacheHandle(function () use ($factionId) {
+            $response = $this->client->request('GET', '/wow/data/character/achievements', [
+                'query' => [
+                    'region' => 'eu',
+                    'locale' => 'fr_FR',
+                    'access_token' => $this->getAccessToken()
+                ]
+            ]);
+
+            return $this->getJsonContent($response);
+        }, 'achievements', self::LONG_TIME);
+    }
+
+    /**
      * @return string
      */
     private function generateAccessToken()

@@ -36,6 +36,13 @@ App\Entity\Achievement:
             swagger_context:
                 summary: "Disabled action, will always return null"
                 description: "Disabled action, will always return null"
+        character_completed_achievements:
+            method: GET
+            path: /characters/{character}/achievements/completed
+            controller: 'App\Controller\Api\DefaultAction'
+            swagger_context:
+                summary: "Retrieve an achievement list with specific filters for a character"
+                description: "Retrieve an achievement list with specific filters for a character"
         character_achievements:
             method: GET
             path: /characters/{character}/achievements
@@ -43,7 +50,7 @@ App\Entity\Achievement:
             swagger_context:
                 summary: "Retrieve an achievement list with specific filters for a character"
                 description: "Retrieve an achievement list with specific filters for a character"
-        
+
 App\Entity\Guild:
     itemOperations:
         character_guild:
