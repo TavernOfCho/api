@@ -20,11 +20,6 @@ class Objective
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $bnet_id;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $title;
@@ -52,7 +47,7 @@ class Objective
     /**
      * @ORM\Column(type="boolean")
      */
-    private $mail_sent;
+    private $mail_sent = false;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
@@ -65,25 +60,6 @@ class Objective
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getBnetId(): ?int
-    {
-        return $this->bnet_id;
-    }
-
-    /**
-     * @param int $bnet_id
-     * @return Objective
-     */
-    public function setBnetId(int $bnet_id): self
-    {
-        $this->bnet_id = $bnet_id;
-
-        return $this;
     }
 
     /**
