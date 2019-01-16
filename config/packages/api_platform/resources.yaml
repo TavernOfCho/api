@@ -1,6 +1,7 @@
 App\Entity\User:
     itemOperations:
         get: ~
+        put: ~
     collectionOperations:
         user_security:
             method: GET
