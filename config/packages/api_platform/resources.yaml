@@ -145,3 +145,5 @@ App\Entity\Objective:
   collectionOperations:
     get:
       filters: ['objective.search_filter']
+    post: ~
+
