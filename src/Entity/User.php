@@ -63,6 +63,16 @@ class User implements UserInterface
     private $plainPassword;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $email;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default" : false})
+     */
+    private $email_enabled = false;
+
+    /**
      * @return int|null
      */
     public function getId(): ?int
@@ -238,12 +248,46 @@ class User implements UserInterface
         return $this;
     }
 
-
-    /**
-     * @return null
-     */
     public function eraseCredentials()
     {
         $this->plainPassword = null;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     * @return User
+     */
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getEmailEnabled(): ?bool
+    {
+        return $this->email_enabled;
+    }
+
+    /**
+     * @param bool $email_enabled
+     * @return User
+     */
+    public function setEmailEnabled(bool $email_enabled): self
+    {
+        $this->email_enabled = $email_enabled;
+
+        return $this;
     }
 }

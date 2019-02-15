@@ -1,6 +1,7 @@
 App\Entity\User:
     itemOperations:
         get: ~
+        put: ~
     collectionOperations:
         user_security:
             method: GET
@@ -9,10 +10,10 @@ App\Entity\User:
             swagger_context:
                 summary: "Retrieve a user list with specific filters"
                 description: "Retrieve a user list with username, password and api_key filters"
-            
+
 App\Entity\Realm:
     itemOperations:
-        get: ~                    
+        get: ~
     collectionOperations:
         get: ~
 
@@ -25,7 +26,7 @@ App\Entity\Character:
             swagger_context:
                 summary: "Disabled action, will always return null"
                 description: "Disabled action, will always return null"
-        
+
 App\Entity\Achievement:
     itemOperations:
         get: ~
@@ -35,6 +36,13 @@ App\Entity\Achievement:
             swagger_context:
                 summary: "Disabled action, will always return null"
                 description: "Disabled action, will always return null"
+        character_completed_achievements:
+            method: GET
+            path: /characters/{character}/achievements/completed
+            controller: 'App\Controller\Api\DefaultAction'
+            swagger_context:
+                summary: "Retrieve an achievement list with specific filters for a character"
+                description: "Retrieve an achievement list with specific filters for a character"
         character_achievements:
             method: GET
             path: /characters/{character}/achievements
@@ -42,7 +50,7 @@ App\Entity\Achievement:
             swagger_context:
                 summary: "Retrieve an achievement list with specific filters for a character"
                 description: "Retrieve an achievement list with specific filters for a character"
-        
+
 App\Entity\Guild:
     itemOperations:
         character_guild:
@@ -79,4 +87,63 @@ App\Entity\Feed:
             swagger_context:
                 summary: "Retrieve a list of feed with specific filters for a character"
                 description: "Retrieve an achievement list with specific filters for a character"
-        
+
+App\Entity\Classes:
+    itemOperations:
+        get:
+            controller: 'App\Controller\Api\BlankAction'
+            swagger_context:
+                summary: "Disabled action, will always return null"
+                description: "Disabled action, will always return null"
+    collectionOperations:
+        get: ~
+
+App\Entity\Race:
+    itemOperations:
+        get:
+            controller: 'App\Controller\Api\BlankAction'
+            swagger_context:
+                summary: "Disabled action, will always return null"
+                description: "Disabled action, will always return null"
+    collectionOperations:
+        get: ~
+
+
+App\Entity\Items:
+    itemOperations:
+        character_items:
+            method: GET
+            path: /characters/{id}/items
+            controller: 'App\Controller\Api\DefaultAction'
+            swagger_context:
+                summary: "Retrieve items with specific filters for a character"
+                description: "Retrieve items with specific filters for a character"
+    collectionOperations:
+        get:
+            controller: 'App\Controller\Api\BlankAction'
+            swagger_context:
+                summary: "Disabled action, will always return null"
+                description: "Disabled action, will always return null"
+
+App\Entity\Stats:
+    itemOperations:
+        character_stats:
+            method: GET
+            path: /characters/{id}/stats
+            controller: 'App\Controller\Api\DefaultAction'
+            swagger_context:
+                summary: "Retrieve stats with specific filters for a character"
+                description: "Retrieve stats with specific filters for a character"
+    collectionOperations:
+        get:
+            controller: 'App\Controller\Api\BlankAction'
+            swagger_context:
+                summary: "Disabled action, will always return null"
+                description: "Disabled action, will always return null"
+
+App\Entity\Objective:
+  collectionOperations:
+    get:
+      filters: ['objective.search_filter']
+    post: ~
+

@@ -31,7 +31,10 @@ class SecurityController extends AbstractController
         $em->persist($user);
         $em->flush();
 
-        return $this->json(sprintf('User %s successfully created', $user->getUsername()));
+        return $this->json([
+            'id' => $user->getId(),
+            'message' => sprintf('User %s successfully created', $user->getUsername())
+        ]);
     }
 
     /**

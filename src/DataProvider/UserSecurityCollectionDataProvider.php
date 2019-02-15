@@ -10,12 +10,13 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 
 /**
  * Class UserSecurityItemDataProvider
  * @package App\DataProvider
  */
-final class UserSecurityItemDataProvider implements CollectionDataProviderInterface, RestrictedDataProviderInterface
+final class UserSecurityCollectionDataProvider implements CollectionDataProviderInterface, RestrictedDataProviderInterface
 {
     /** @var ObjectManager $manager */
     private $manager;
@@ -79,10 +80,19 @@ final class UserSecurityItemDataProvider implements CollectionDataProviderInterf
         }
 
         $users = $this->manager->getRepository(User::class)->findBy(['username' => $filters['username']]);
+        if (empty($users)) {
+            return $this->throwError('Username not found.');
+        }
 
-        return array_filter($users, function (User $user) use($filters) {
+        $results = array_filter($users, function (User $user) use ($filters) {
             return $this->encoder->isPasswordValid($user, $filters['password']);
         });
+
+        if (empty($results)) {
+            return $this->throwError('Username not found or password invalid.');
+        }
+
+        return $results;
     }
 
     /**
@@ -92,6 +102,18 @@ final class UserSecurityItemDataProvider implements CollectionDataProviderInterf
     public function getFilters()
     {
         return $this->request->query->all();
+    }
+
+    /**
+     * @param string $class
+     * @param string $message
+     * @return array
+     */
+    private function throwError(string $message = null, string $class = UsernameNotFoundException::class)
+    {
+        return [[
+            'error' => ['type' => $class, 'message' => $message]
+        ]];
     }
 
 }

@@ -62,6 +62,11 @@ class Achievement
     private $completedAt;
 
     /**
+     * @var string $category
+     */
+    private $category;
+
+    /**
      * @return int|null
      */
     public function getId(): ?int
@@ -254,4 +259,25 @@ class Achievement
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param string $category
+     * @return Achievement
+     */
+    public function setCategory(?string $category): Achievement
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+
 }
