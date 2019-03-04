@@ -1,24 +1,25 @@
 <?php
 
-namespace App\DataProvider\BattleNet\Achievement;
+namespace App\DataProvider\BattleNet\Character;
 
 use ApiPlatform\Core\DataProvider\CollectionDataProviderInterface;
 use ApiPlatform\Core\Exception\ResourceClassNotSupportedException;
 use App\DataProvider\BattleNet\AbstractBattleNetDataProvider;
 use App\DataProvider\Traits\RealmFilterTrait;
 use App\DataTransformer\AchievementTransformer;
-use App\Entity\Achievement;
+use App\DataTransformer\CharacterTransformer;
+use App\Entity\Character;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Class AchievementCollectionDataProvider
- * @property AchievementTransformer $transformer
+ * Class CharacterCollectionDataProvider
+ * @property CharacterTransformer $transformer
  */
-class AchievementCollectionDataProvider extends AbstractBattleNetDataProvider implements CollectionDataProviderInterface
+class CharacterCollectionDataProvider extends AbstractBattleNetDataProvider implements CollectionDataProviderInterface
 {
     use RealmFilterTrait;
 
-    public $model = Achievement::class;
+    public $model = Character::class;
 
     /**
      * @param string $resourceClass
@@ -30,7 +31,7 @@ class AchievementCollectionDataProvider extends AbstractBattleNetDataProvider im
         if ($operationName === 'character_completed_achievements') {
             $realm = $this->getRealm();
 
-            $character = $this->getRequest()->attributes->get('character');
+            $character = $this->getRequest()->attributes->get('id');
             $character = $this->battleNetSDK->getCharacter($character, $realm, 'achievements');
 
             $achievements = array_combine(
@@ -40,7 +41,7 @@ class AchievementCollectionDataProvider extends AbstractBattleNetDataProvider im
 
             array_walk($achievements, function (&$achievement, $timestamp) {
                 $achievement = $this->battleNetSDK->getAchievement($achievement);
-                $achievement = $this->transformer->transformItem($achievement);
+                $achievement = $this->container->get(AchievementTransformer::class)->transformItem($achievement);
                 $achievement->setCompletedAt($this->battleNetSDK->formatTimestamp($timestamp));
             });
 
@@ -49,10 +50,11 @@ class AchievementCollectionDataProvider extends AbstractBattleNetDataProvider im
             return $this->paginate($collection, $resourceClass, $operationName);
         }
 
+
         if ($operationName === 'character_achievements') {
             $realm = $this->getRealm();
 
-            $character = $this->getRequest()->attributes->get('character');
+            $character = $this->getRequest()->attributes->get('id');
             $character = $this->battleNetSDK->getCharacter($character, $realm);
             $content = $this->battleNetSDK->getAchievements($character['faction']);
             $content = $content['achievements'];
@@ -88,4 +90,15 @@ class AchievementCollectionDataProvider extends AbstractBattleNetDataProvider im
 
         throw new ResourceClassNotSupportedException();
     }
+
+    /**
+     * @return array The required service types, optionally keyed by service names
+     */
+    public static function getSubscribedServices()
+    {
+        return [
+            'App\DataTransformer\AchievementTransformer'
+        ];
+    }
+
 }
