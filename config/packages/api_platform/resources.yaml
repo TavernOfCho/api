@@ -26,6 +26,13 @@ App\Entity\Character:
             swagger_context:
                 summary: "Disabled action, will always return null"
                 description: "Disabled action, will always return null"
+        character_guild:
+            method: GET
+            path: /characters/{id}/guild
+            controller: 'App\Controller\Api\DefaultAction'
+            swagger_context:
+                summary: "Retrieve an achievement list with specific filters for a character"
+                description: "Retrieve an achievement list with specific filters for a character"
         character_achievements:
             method: GET
             path: /characters/{id}/achievements
@@ -40,6 +47,13 @@ App\Entity\Character:
             swagger_context:
                 summary: "Retrieve an achievement list with specific filters for a character"
                 description: "Retrieve an achievement list with specific filters for a character"
+        character_feeds:
+            method: GET
+            path: /characters/{character}/feeds
+            controller: 'App\Controller\Api\DefaultAction'
+            swagger_context:
+                summary: "Retrieve a list of feed with specific filters for a character"
+                description: "Retrieve an achievement list with specific filters for a character"
 
 App\Entity\Achievement:
     itemOperations:
@@ -50,43 +64,6 @@ App\Entity\Achievement:
             swagger_context:
                 summary: "Disabled action, will always return null"
                 description: "Disabled action, will always return null"
-
-App\Entity\Guild:
-    itemOperations:
-        character_guild:
-            method: GET
-            path: /characters/{id}/guild
-            controller: 'App\Controller\Api\DefaultAction'
-            swagger_context:
-                summary: "Retrieve an achievement list with specific filters for a character"
-                description: "Retrieve an achievement list with specific filters for a character"
-    collectionOperations:
-        get:
-            controller: 'App\Controller\Api\BlankAction'
-            swagger_context:
-                summary: "Disabled action, will always return null"
-                description: "Disabled action, will always return null"
-
-App\Entity\Feed:
-    itemOperations:
-        get:
-            controller: 'App\Controller\Api\BlankAction'
-            swagger_context:
-                summary: "Disabled action, will always return null"
-                description: "Disabled action, will always return null"
-    collectionOperations:
-        get:
-            controller: 'App\Controller\Api\BlankAction'
-            swagger_context:
-                summary: "Disabled action, will always return null"
-                description: "Disabled action, will always return null"
-        character_feeds:
-            method: GET
-            path: /characters/{character}/feeds
-            controller: 'App\Controller\Api\DefaultAction'
-            swagger_context:
-                summary: "Retrieve a list of feed with specific filters for a character"
-                description: "Retrieve an achievement list with specific filters for a character"
 
 App\Entity\Classes:
     itemOperations:

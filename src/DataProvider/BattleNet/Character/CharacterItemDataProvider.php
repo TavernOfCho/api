@@ -7,6 +7,7 @@ use ApiPlatform\Core\Exception\ResourceClassNotSupportedException;
 use App\DataProvider\BattleNet\AbstractBattleNetDataProvider;
 use App\DataProvider\Traits\RealmFilterTrait;
 use App\DataTransformer\CharacterTransformer;
+use App\DataTransformer\ItemsTransformer;
 use App\Entity\Character;
 
 /**
@@ -17,7 +18,7 @@ class CharacterItemDataProvider extends AbstractBattleNetDataProvider implements
 {
     use RealmFilterTrait;
 
-    public $model= Character::class;
+    public $model = Character::class;
 
     /**
      * Retrieves an item.
@@ -36,6 +37,21 @@ class CharacterItemDataProvider extends AbstractBattleNetDataProvider implements
             return $this->transformer->transformItem($this->battleNetSDK->getCharacter($id, $realm));
         }
 
+        if ($operationName === 'character_guild') {
+            $realm = $this->getRealm();
+
+            $itemsTransformer = $this->container->get(ItemsTransformer::class);
+            return $itemsTransformer->transformItem($this->battleNetSDK->getCharacter($id, $realm, 'guild'));
+        }
+
+
         throw new ResourceClassNotSupportedException();
+    }
+
+    public static function getSubscribedServices()
+    {
+        return [
+          'App\DataTransformer\ItemsTransformer'
+        ];
     }
 }

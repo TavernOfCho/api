@@ -8,6 +8,7 @@ use App\DataProvider\BattleNet\AbstractBattleNetDataProvider;
 use App\DataProvider\Traits\RealmFilterTrait;
 use App\DataTransformer\AchievementTransformer;
 use App\DataTransformer\CharacterTransformer;
+use App\DataTransformer\FeedTransformer;
 use App\Entity\Character;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -50,7 +51,6 @@ class CharacterCollectionDataProvider extends AbstractBattleNetDataProvider impl
             return $this->paginate($collection, $resourceClass, $operationName);
         }
 
-
         if ($operationName === 'character_achievements') {
             $realm = $this->getRealm();
 
@@ -88,6 +88,21 @@ class CharacterCollectionDataProvider extends AbstractBattleNetDataProvider impl
             return $this->paginate($collection, $resourceClass, $operationName);
         }
 
+        if ($operationName === 'character_feeds') {
+            $realm = $this->getRealm();
+
+            $character = $this->getRequest()->attributes->get('id');
+            $character = $this->battleNetSDK->getCharacter($character, $realm, 'feed');
+
+            $feedTransformer = $this->container->get(FeedTransformer::class);
+            $elements = $feedTransformer->transformCollection($character);
+
+            $collection = new ArrayCollection($elements);
+
+            return $this->paginate($collection, $resourceClass, $operationName);
+        }
+
+
         throw new ResourceClassNotSupportedException();
     }
 
@@ -97,7 +112,8 @@ class CharacterCollectionDataProvider extends AbstractBattleNetDataProvider impl
     public static function getSubscribedServices()
     {
         return [
-            'App\DataTransformer\AchievementTransformer'
+            'App\DataTransformer\AchievementTransformer',
+            'App\DataTransformer\FeedTransformer',
         ];
     }
 
