@@ -20,6 +20,20 @@ App\Entity\Realm:
 App\Entity\Character:
     itemOperations:
         get: ~
+        character_items:
+            method: GET
+            path: /characters/{id}/items
+            controller: 'App\Controller\Api\DefaultAction'
+            swagger_context:
+                summary: "Retrieve items with specific filters for a character"
+                description: "Retrieve items with specific filters for a character"
+        character_stats:
+            method: GET
+            path: /characters/{id}/stats
+            controller: 'App\Controller\Api\DefaultAction'
+            swagger_context:
+                summary: "Retrieve stats with specific filters for a character"
+                description: "Retrieve stats with specific filters for a character"
     collectionOperations:
         get:
             controller: 'App\Controller\Api\BlankAction'
@@ -49,7 +63,7 @@ App\Entity\Character:
                 description: "Retrieve an achievement list with specific filters for a character"
         character_feeds:
             method: GET
-            path: /characters/{character}/feeds
+            path: /characters/{id}/feeds
             controller: 'App\Controller\Api\DefaultAction'
             swagger_context:
                 summary: "Retrieve a list of feed with specific filters for a character"
@@ -84,39 +98,6 @@ App\Entity\Race:
                 description: "Disabled action, will always return null"
     collectionOperations:
         get: ~
-
-
-App\Entity\Items:
-    itemOperations:
-        character_items:
-            method: GET
-            path: /characters/{id}/items
-            controller: 'App\Controller\Api\DefaultAction'
-            swagger_context:
-                summary: "Retrieve items with specific filters for a character"
-                description: "Retrieve items with specific filters for a character"
-    collectionOperations:
-        get:
-            controller: 'App\Controller\Api\BlankAction'
-            swagger_context:
-                summary: "Disabled action, will always return null"
-                description: "Disabled action, will always return null"
-
-App\Entity\Stats:
-    itemOperations:
-        character_stats:
-            method: GET
-            path: /characters/{id}/stats
-            controller: 'App\Controller\Api\DefaultAction'
-            swagger_context:
-                summary: "Retrieve stats with specific filters for a character"
-                description: "Retrieve stats with specific filters for a character"
-    collectionOperations:
-        get:
-            controller: 'App\Controller\Api\BlankAction'
-            swagger_context:
-                summary: "Disabled action, will always return null"
-                description: "Disabled action, will always return null"
 
 App\Entity\Objective:
   collectionOperations:
