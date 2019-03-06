@@ -33,11 +33,6 @@ services:
     # please note that last definitions always *replace* previous ones
     # Listener
 
-    App\EventListener\HashPasswordListener:
-        tags:
-        - { name: doctrine.event_subscriber }
-
-
     App\DataProvider\UserSecurityCollectionDataProvider:
         arguments:
             $api_key: '%api_key%'
