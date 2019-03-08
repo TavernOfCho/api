@@ -1,16 +1,3 @@
-App\Entity\User:
-    itemOperations:
-        get: ~
-        put: ~
-    collectionOperations:
-        user_security:
-            method: GET
-            path: /users/security
-            controller: 'App\Controller\Api\UserSecurityAction'
-            swagger_context:
-                summary: "Retrieve a user list with specific filters"
-                description: "Retrieve a user list with username, password and api_key filters"
-
 App\Entity\Realm:
     itemOperations:
         get: ~

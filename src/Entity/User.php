@@ -57,25 +57,25 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"user_write", "user_read"})
      */
-    private $bnet_sub;
+    private $bnetSub;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @Groups({"user_write", "user_read"})
      */
-    private $bnet_id;
+    private $bnetId;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"user_write", "user_read"})
      */
-    private $bnet_battletag;
+    private $bnetBattletag;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"user_write", "user_read"})
      */
-    private $bnet_access_token;
+    private $bnetAccessToken;
 
     /**
      * @ORM\Column(type="boolean", options={"default" : true})
@@ -93,7 +93,7 @@ class User implements UserInterface
      * @ORM\Column(type="boolean", options={"default" : true})
      * @Groups({"user_write", "user_read"})
      */
-    private $email_enabled;
+    private $emailEnabled;
 
     public function getId(): ?int
     {
@@ -193,48 +193,48 @@ class User implements UserInterface
 
     public function getBnetSub(): ?string
     {
-        return $this->bnet_sub;
+        return $this->bnetSub;
     }
 
-    public function setBnetSub(?string $bnet_sub): self
+    public function setBnetSub(?string $bnetSub): self
     {
-        $this->bnet_sub = $bnet_sub;
+        $this->bnetSub = $bnetSub;
 
         return $this;
     }
 
     public function getBnetId(): ?int
     {
-        return $this->bnet_id;
+        return $this->bnetId;
     }
 
-    public function setBnetId(?int $bnet_id): self
+    public function setBnetId(?int $bnetId): self
     {
-        $this->bnet_id = $bnet_id;
+        $this->bnetId = $bnetId;
 
         return $this;
     }
 
     public function getBnetBattletag(): ?string
     {
-        return $this->bnet_battletag;
+        return $this->bnetBattletag;
     }
 
-    public function setBnetBattletag(?string $bnet_battletag): self
+    public function setBnetBattletag(?string $bnetBattletag): self
     {
-        $this->bnet_battletag = $bnet_battletag;
+        $this->bnetBattletag = $bnetBattletag;
 
         return $this;
     }
 
     public function getBnetAccessToken(): ?string
     {
-        return $this->bnet_access_token;
+        return $this->bnetAccessToken;
     }
 
-    public function setBnetAccessToken(string $bnet_access_token): self
+    public function setBnetAccessToken(string $bnetAccessToken): self
     {
-        $this->bnet_access_token = $bnet_access_token;
+        $this->bnetAccessToken = $bnetAccessToken;
 
         return $this;
     }
@@ -265,12 +265,12 @@ class User implements UserInterface
 
     public function getEmailEnabled(): ?bool
     {
-        return $this->email_enabled;
+        return $this->emailEnabled;
     }
 
-    public function setEmailEnabled(bool $email_enabled): self
+    public function setEmailEnabled(bool $emailEnabled): self
     {
-        $this->email_enabled = $email_enabled;
+        $this->emailEnabled = $emailEnabled;
 
         return $this;
     }
