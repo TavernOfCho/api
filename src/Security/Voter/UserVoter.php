@@ -2,13 +2,10 @@
 
 namespace App\Security\Voter;
 
-use App\Entity\Airport;
 use App\Entity\User;
-use App\Repository\AirportRepository;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserVoter extends Voter
 {

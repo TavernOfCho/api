@@ -2,7 +2,7 @@
 
 namespace App\DataTransformer;
 
-use App\Entity\Guild;
+use App\Models\Guild;
 
 class GuildTransformer extends AbstractTransformer
 {

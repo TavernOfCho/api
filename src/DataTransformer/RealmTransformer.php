@@ -2,7 +2,7 @@
 
 namespace App\DataTransformer;
 
-use App\Entity\Realm;
+use App\Models\Realm;
 
 class RealmTransformer extends AbstractTransformer
 {

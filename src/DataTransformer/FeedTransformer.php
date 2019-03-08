@@ -2,7 +2,7 @@
 
 namespace App\DataTransformer;
 
-use App\Entity\Feed;
+use App\Models\Feed;
 use App\Utils\BattleNetSDK;
 
 class FeedTransformer extends AbstractTransformer

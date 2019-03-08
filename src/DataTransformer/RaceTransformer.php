@@ -2,7 +2,7 @@
 
 namespace App\DataTransformer;
 
-use App\Entity\Race;
+use App\Models\Race;
 
 class RaceTransformer extends AbstractTransformer
 {

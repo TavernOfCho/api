@@ -2,7 +2,7 @@
 
 namespace App\DataTransformer;
 
-use App\Entity\Character;
+use App\Models\Character;
 
 class CharacterTransformer extends AbstractTransformer
 {

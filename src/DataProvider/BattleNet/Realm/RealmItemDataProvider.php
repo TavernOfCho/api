@@ -6,7 +6,7 @@ use ApiPlatform\Core\DataProvider\ItemDataProviderInterface;
 use ApiPlatform\Core\Exception\ResourceClassNotSupportedException;
 use App\DataProvider\BattleNet\AbstractBattleNetDataProvider;
 use App\DataTransformer\RealmTransformer;
-use App\Entity\Realm;
+use App\Models\Realm;
 
 /**
  * Class RealmItemDataProvider

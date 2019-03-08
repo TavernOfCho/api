@@ -10,7 +10,7 @@ use App\DataTransformer\CharacterTransformer;
 use App\DataTransformer\GuildTransformer;
 use App\DataTransformer\ItemsTransformer;
 use App\DataTransformer\StatsTransformer;
-use App\Entity\Character;
+use App\Models\Character;
 
 /**
  * Class CharacterItemDataProvider

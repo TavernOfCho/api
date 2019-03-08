@@ -2,7 +2,7 @@
 
 namespace App\DataTransformer;
 
-use App\Entity\Stats;
+use App\Models\Stats;
 
 class StatsTransformer extends AbstractTransformer
 {

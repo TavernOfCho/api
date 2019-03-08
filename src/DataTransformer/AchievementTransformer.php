@@ -2,7 +2,7 @@
 
 namespace App\DataTransformer;
 
-use App\Entity\Achievement;
+use App\Models\Achievement;
 
 class AchievementTransformer extends AbstractTransformer
 {

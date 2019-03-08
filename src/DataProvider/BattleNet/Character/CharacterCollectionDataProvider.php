@@ -9,7 +9,7 @@ use App\DataProvider\Traits\RealmFilterTrait;
 use App\DataTransformer\AchievementTransformer;
 use App\DataTransformer\CharacterTransformer;
 use App\DataTransformer\FeedTransformer;
-use App\Entity\Character;
+use App\Models\Character;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**

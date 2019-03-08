@@ -6,7 +6,7 @@ use ApiPlatform\Core\DataProvider\ItemDataProviderInterface;
 use ApiPlatform\Core\Exception\ResourceClassNotSupportedException;
 use App\DataProvider\BattleNet\AbstractBattleNetDataProvider;
 use App\DataTransformer\ItemsTransformer;
-use App\Entity\Achievement;
+use App\Models\Achievement;
 
 /**
  * Class AchievementItemDataProvider

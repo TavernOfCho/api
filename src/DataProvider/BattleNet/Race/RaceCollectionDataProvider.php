@@ -6,7 +6,7 @@ use ApiPlatform\Core\DataProvider\CollectionDataProviderInterface;
 use ApiPlatform\Core\Exception\ResourceClassNotSupportedException;
 use App\DataProvider\BattleNet\AbstractBattleNetDataProvider;
 use App\DataTransformer\RaceTransformer;
-use App\Entity\Race;
+use App\Models\Race;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**

@@ -1,10 +1,10 @@
-App\Entity\Realm:
+App\Models\Realm:
     itemOperations:
         get: ~
     collectionOperations:
         get: ~
 
-App\Entity\Character:
+App\Models\Character:
     itemOperations:
         get: ~
         character_items:
@@ -56,7 +56,7 @@ App\Entity\Character:
                 summary: "Retrieve a list of feed with specific filters for a character"
                 description: "Retrieve an achievement list with specific filters for a character"
 
-App\Entity\Achievement:
+App\Models\Achievement:
     itemOperations:
         get: ~
     collectionOperations:
@@ -66,7 +66,7 @@ App\Entity\Achievement:
                 summary: "Disabled action, will always return null"
                 description: "Disabled action, will always return null"
 
-App\Entity\Classes:
+App\Models\Classes:
     itemOperations:
         get:
             controller: 'App\Controller\Api\BlankAction'
@@ -76,7 +76,7 @@ App\Entity\Classes:
     collectionOperations:
         get: ~
 
-App\Entity\Race:
+App\Models\Race:
     itemOperations:
         get:
             controller: 'App\Controller\Api\BlankAction'

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Models;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
@@ -8,7 +8,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 /**
  * @ApiResource()
  */
-class Classes
+class Race
 {
     /**
      * @ApiProperty(identifier=true)
@@ -22,9 +22,9 @@ class Classes
     private $mask;
 
     /**
-     * @var string $powerType
+     * @var string $side
      */
-    private $powerType;
+    private $side;
 
     /**
      * @var string $name
@@ -72,18 +72,18 @@ class Classes
     /**
      * @return string
      */
-    public function getPowerType(): ?string
+    public function getSide(): ?string
     {
-        return $this->powerType;
+        return $this->side;
     }
 
     /**
-     * @param string $powerType
+     * @param string $side
      * @return self
      */
-    public function setPowerType(?string $powerType): self
+    public function setSide(?string $side): self
     {
-        $this->powerType = $powerType;
+        $this->side = $side;
 
         return $this;
     }
@@ -106,5 +106,4 @@ class Classes
 
         return $this;
     }
-
 }

@@ -2,7 +2,7 @@
 
 namespace App\DataTransformer;
 
-use App\Entity\Classes;
+use App\Models\Classes;
 
 class ClassesTransformer extends AbstractTransformer
 {

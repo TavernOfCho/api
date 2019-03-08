@@ -6,7 +6,7 @@ use ApiPlatform\Core\DataProvider\CollectionDataProviderInterface;
 use ApiPlatform\Core\Exception\ResourceClassNotSupportedException;
 use App\DataProvider\BattleNet\AbstractBattleNetDataProvider;
 use App\DataTransformer\ClassesTransformer;
-use App\Entity\Classes;
+use App\Models\Classes;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
