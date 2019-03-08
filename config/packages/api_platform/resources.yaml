@@ -6,9 +6,7 @@ App\Models\Realm:
 
 App\Models\Character:
     itemOperations:
-        get: 
-            method: GET
-            path: /characters/{id}/{realm}
+        get: ~ 
         character_items:
             method: GET
             path: /characters/{id}/{realm}/items
