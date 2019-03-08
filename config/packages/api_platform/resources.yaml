@@ -6,51 +6,53 @@ App\Models\Realm:
 
 App\Models\Character:
     itemOperations:
-        get: ~
+        get: 
+            method: GET
+            path: /characters/{id}/{realm}
         character_items:
             method: GET
-            path: /characters/{id}/items
+            path: /characters/{id}/{realm}/items
             controller: 'App\Controller\Api\DefaultAction'
             swagger_context:
                 summary: "Retrieve items with specific filters for a character"
                 description: "Retrieve items with specific filters for a character"
         character_stats:
             method: GET
-            path: /characters/{id}/stats
+            path: /characters/{id}/{realm}/stats
             controller: 'App\Controller\Api\DefaultAction'
             swagger_context:
                 summary: "Retrieve stats with specific filters for a character"
                 description: "Retrieve stats with specific filters for a character"
+        character_guild:
+            method: GET
+            path: /characters/{id}/{realm}/guild
+            controller: 'App\Controller\Api\DefaultAction'
+            swagger_context:
+                summary: "Retrieve an achievement list with specific filters for a character"
+                description: "Retrieve an achievement list with specific filters for a character"
     collectionOperations:
         get:
             controller: 'App\Controller\Api\BlankAction'
             swagger_context:
                 summary: "Disabled action, will always return null"
                 description: "Disabled action, will always return null"
-        character_guild:
-            method: GET
-            path: /characters/{id}/guild
-            controller: 'App\Controller\Api\DefaultAction'
-            swagger_context:
-                summary: "Retrieve an achievement list with specific filters for a character"
-                description: "Retrieve an achievement list with specific filters for a character"
         character_achievements:
             method: GET
-            path: /characters/{id}/achievements
+            path: /characters/{id}/{realm}/achievements
             controller: 'App\Controller\Api\DefaultAction'
             swagger_context:
                 summary: "Retrieve an achievement list with specific filters for a character"
                 description: "Retrieve an achievement list with specific filters for a character"
         character_completed_achievements:
             method: GET
-            path: /characters/{id}/achievements/completed
+            path: /characters/{id}/{realm}/achievements/completed
             controller: 'App\Controller\Api\DefaultAction'
             swagger_context:
                 summary: "Retrieve an achievement list with specific filters for a character"
                 description: "Retrieve an achievement list with specific filters for a character"
         character_feeds:
             method: GET
-            path: /characters/{id}/feeds
+            path: /characters/{id}/{realm}/feeds
             controller: 'App\Controller\Api\DefaultAction'
             swagger_context:
                 summary: "Retrieve a list of feed with specific filters for a character"

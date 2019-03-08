@@ -31,7 +31,7 @@ class CharacterItemDataProvider extends AbstractBattleNetDataProvider implements
      * @param array $context
      * @return Character
      */
-    public function getItem(string $resourceClass, $id, string $operationName = null, array $context = []): ?Character
+    public function getItem(string $resourceClass, $id, string $operationName = null, array $context = [])
     {
         if ($operationName === 'get') {
             $realm = $this->getRealm();
@@ -75,9 +75,9 @@ class CharacterItemDataProvider extends AbstractBattleNetDataProvider implements
     public static function getSubscribedServices()
     {
         return [
-          'App\DataTransformer\ItemsTransformer',
-          'App\DataTransformer\GuildTransformer',
-          'App\DataTransformer\StatsTransformer',
+            'App\DataTransformer\ItemsTransformer',
+            'App\DataTransformer\GuildTransformer',
+            'App\DataTransformer\StatsTransformer',
         ];
     }
 }
