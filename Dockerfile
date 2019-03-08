@@ -13,10 +13,9 @@ RUN apk add --no-cache \
 		file \
 		gettext \
 		git \
-		postgresql-client \
 	;
 
-ARG APCU_VERSION=5.1.12
+ARG APCU_VERSION=5.1.16
 RUN set -eux; \
 	apk add --no-cache --virtual .build-deps \
 		$PHPIZE_DEPS \
@@ -52,7 +51,8 @@ RUN set -eux; \
 	apk del .build-deps
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-COPY docker/php/php.ini /usr/local/etc/php/php.ini
+RUN ln -s $PHP_INI_DIR/php.ini-production $PHP_INI_DIR/php.ini
+COPY docker/php/conf.d/api-platform.ini $PHP_INI_DIR/conf.d/api-platform.ini
 
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
 ENV COMPOSER_ALLOW_SUPERUSER=1
@@ -67,12 +67,25 @@ WORKDIR /srv/api
 ARG APP_ENV=prod
 
 # prevent the reinstallation of vendors at every changes in the source code
-COPY composer.json composer.lock ./
+COPY composer.json composer.lock symfony.lock ./
+# do not use .env files in production
+RUN echo '<?php return [];' > .env.local.php
 RUN set -eux; \
 	composer install --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress --no-suggest; \
 	composer clear-cache
 
-COPY . ./
+# copy only specifically what we need
+COPY bin bin/
+COPY config config/
+COPY public public/
+COPY src src/
+
+ARG XDEBUG_VERSION=2.6.0
+RUN set -eux; \
+	apk add --no-cache --virtual .build-deps $PHPIZE_DEPS; \
+	pecl install xdebug-$XDEBUG_VERSION; \
+	docker-php-ext-enable xdebug; \
+	apk del .build-deps
 
 RUN set -eux; \
 	mkdir -p var/cache var/log; \
@@ -86,6 +99,7 @@ RUN chmod +x /usr/local/bin/docker-entrypoint
 
 ENTRYPOINT ["docker-entrypoint"]
 CMD ["php-fpm"]
+
 
 FROM nginx:${NGINX_VERSION}-alpine AS api_platform_nginx
 

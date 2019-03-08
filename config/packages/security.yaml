@@ -45,7 +45,6 @@ security:
     # This config requires being logged for the whole site and having the admin role for the admin part.
     # Change these rules to adapt them to your needs
     - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
-    - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/token/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/$, role: IS_AUTHENTICATED_ANONYMOUSLY }
     

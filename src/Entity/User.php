@@ -4,12 +4,18 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     normalizationContext={"groups"={"user_read"}},
+ *     denormalizationContext={"groups"={"user_write"}}
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="users")
+ * @UniqueEntity("username")
  */
 class User implements UserInterface
 {
@@ -21,32 +27,16 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @var array
+     *
+     * @ORM\Column(type="json_array")
+     * @Groups({"user_write", "user_read"})
      */
-    private $bnet_id;
+    private $roles = ["ROLE_USER"];
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $bnet_sub;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $bnet_battletag;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $bnet_access_token;
-
-    /**
-     * @ORM\Column(name="enabled", type="boolean", options={"default" : true})
-     */
-    private $enabled = true;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"user_write", "user_read"})
      */
     private $username;
 
@@ -59,150 +49,112 @@ class User implements UserInterface
      * A non-persisted field that's used to create the encoded password.
      *
      * @var string $plainPassword
+     * @Groups({"user_write"})
      */
     private $plainPassword;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"user_write", "user_read"})
+     */
+    private $bnet_sub;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"user_write", "user_read"})
+     */
+    private $bnet_id;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"user_write", "user_read"})
+     */
+    private $bnet_battletag;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"user_write", "user_read"})
+     */
+    private $bnet_access_token;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default" : true})
+     * @Groups({"user_write", "user_read"})
+     */
+    private $enabled;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"user_write", "user_read"})
      */
     private $email;
 
     /**
-     * @ORM\Column(type="boolean", options={"default" : false})
+     * @ORM\Column(type="boolean", options={"default" : true})
+     * @Groups({"user_write", "user_read"})
      */
-    private $email_enabled = false;
+    private $email_enabled;
 
-    /**
-     * @return int|null
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getBnetId(): ?int
+    public function hasRole(?string $role): ?bool
     {
-        return $this->bnet_id;
+        return in_array($role, $this->getRoles());
     }
 
-    /**
-     * @param int $bnet_id
-     * @return User
-     */
-    public function setBnetId(int $bnet_id): self
+    public function getRoles(): array
     {
-        $this->bnet_id = $bnet_id;
+        $roles = $this->roles;
+
+        if (!in_array('ROLE_USER', $roles)) {
+            $roles[] = 'ROLE_USER';
+        }
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(?array $roles): self
+    {
+        $this->roles = $roles;
 
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getBnetSub(): ?string
+    public function removeRole(?string $role): bool
     {
-        return $this->bnet_sub;
+        $key = array_search($role, $this->roles, true);
+
+        if ($key === false) {
+            return false;
+        }
+
+        unset($this->roles[$key]);
+
+        return true;
     }
 
-    /**
-     * @param string $bnet_sub
-     * @return User
-     */
-    public function setBnetSub(string $bnet_sub): self
+    public function addRole(?string $role): self
     {
-        $this->bnet_sub = $bnet_sub;
+        $this->roles[] = $role;
+        $this->roles = array_unique($this->roles);
 
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getBnetBattletag(): ?string
-    {
-        return $this->bnet_battletag;
-    }
-
-    /**
-     * @param string $bnet_battletag
-     * @return User
-     */
-    public function setBnetBattletag(string $bnet_battletag): self
-    {
-        $this->bnet_battletag = $bnet_battletag;
-
-        return $this;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getBnetAccessToken(): ?string
-    {
-        return $this->bnet_access_token;
-    }
-
-    /**
-     * @param string $bnet_access_token
-     * @return User
-     */
-    public function setBnetAccessToken(string $bnet_access_token): self
-    {
-        $this->bnet_access_token = $bnet_access_token;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isEnabled(): bool
-    {
-        return $this->enabled;
-    }
-
-    /**
-     * @param bool $enabled
-     * @return User
-     */
-    public function setEnabled(bool $enabled): self
-    {
-        $this->enabled = $enabled;
-
-        return $this;
-    }
-
-    /**
-     * @return array The user roles
-     */
-    public function getRoles()
-    {
-        return ['ROLE_USER'];
-    }
-
-    /**
-     * @return string The password
-     */
-    public function getPassword()
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    /**
-     * @return string
-     */
-    public function getPlainPassword()
+    public function getPlainPassword(): ?string
     {
         return $this->plainPassword;
     }
 
-    /**
-     * @param $plainPassword
-     */
-    public function setPlainPassword($plainPassword)
+    public function setPlainPassword(?string $plainPassword)
     {
         $this->plainPassword = $plainPassword;
         // forces the object to look "dirty" to Doctrine. Avoids
@@ -210,38 +162,24 @@ class User implements UserInterface
         $this->password = null;
     }
 
-    /**
-     * @param $password
-     * @return $this
-     */
-    public function setPassword($password)
+    public function setPassword(?string $password): self
     {
         $this->password = $password;
 
         return $this;
     }
 
-    /**
-     * @return string|null The salt
-     */
     public function getSalt()
     {
         return null;
     }
 
-    /**
-     * @return string The username
-     */
-    public function getUsername()
+    public function getUsername(): ?string
     {
         return $this->username;
     }
 
-    /**
-     * @param mixed $username
-     * @return User
-     */
-    public function setUsername($username)
+    public function setUsername(?string $username): self
     {
         $this->username = $username;
 
@@ -253,37 +191,83 @@ class User implements UserInterface
         $this->plainPassword = null;
     }
 
-    /**
-     * @return string|null
-     */
+    public function getBnetSub(): ?string
+    {
+        return $this->bnet_sub;
+    }
+
+    public function setBnetSub(?string $bnet_sub): self
+    {
+        $this->bnet_sub = $bnet_sub;
+
+        return $this;
+    }
+
+    public function getBnetId(): ?int
+    {
+        return $this->bnet_id;
+    }
+
+    public function setBnetId(?int $bnet_id): self
+    {
+        $this->bnet_id = $bnet_id;
+
+        return $this;
+    }
+
+    public function getBnetBattletag(): ?string
+    {
+        return $this->bnet_battletag;
+    }
+
+    public function setBnetBattletag(?string $bnet_battletag): self
+    {
+        $this->bnet_battletag = $bnet_battletag;
+
+        return $this;
+    }
+
+    public function getBnetAccessToken(): ?string
+    {
+        return $this->bnet_access_token;
+    }
+
+    public function setBnetAccessToken(string $bnet_access_token): self
+    {
+        $this->bnet_access_token = $bnet_access_token;
+
+        return $this;
+    }
+
+    public function getEnabled(): ?bool
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled): self
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    /**
-     * @param string $email
-     * @return User
-     */
-    public function setEmail(string $email): self
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
 
         return $this;
     }
 
-    /**
-     * @return bool|null
-     */
     public function getEmailEnabled(): ?bool
     {
         return $this->email_enabled;
     }
 
-    /**
-     * @param bool $email_enabled
-     * @return User
-     */
     public function setEmailEnabled(bool $email_enabled): self
     {
         $this->email_enabled = $email_enabled;
