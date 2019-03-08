@@ -7,14 +7,14 @@ use App\Utils\BattleNetSDK;
 
 class FeedTransformer extends AbstractTransformer
 {
-    /** @var ItemsTransformer $achievementTransformer */
+    /** @var AchievementTransformer $achievementTransformer */
     private $achievementTransformer;
 
     /**
      * FeedTransformer constructor.
-     * @param ItemsTransformer $achievementTransformer
+     * @param AchievementTransformer $achievementTransformer
      */
-    public function __construct(ItemsTransformer $achievementTransformer)
+    public function __construct(AchievementTransformer $achievementTransformer)
     {
         parent::__construct();
         $this->achievementTransformer = $achievementTransformer;
