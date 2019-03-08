@@ -9,9 +9,12 @@ use App\Utils\BattleNetSDK;
 use App\Utils\Pagerfanta;
 use Doctrine\Common\Collections\ArrayCollection;
 use Pagerfanta\Adapter\DoctrineCollectionAdapter;
+use Psr\Container\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Contracts\Service\ServiceSubscriberInterface;
 
-abstract class AbstractBattleNetDataProvider implements RestrictedDataProviderInterface
+abstract class AbstractBattleNetDataProvider implements RestrictedDataProviderInterface, ServiceSubscriberInterface
 {
     /** @var BattleNetSDK $battleNetSDK */
     protected $battleNetSDK;
@@ -25,6 +28,9 @@ abstract class AbstractBattleNetDataProvider implements RestrictedDataProviderIn
     /** @var ResourceMetadataFactoryInterface $resourceMetadataFactory */
     protected $resourceMetadataFactory;
 
+    /** @var ContainerInterface $container */
+    protected $container;
+
     public $model;
 
     /**
@@ -32,13 +38,17 @@ abstract class AbstractBattleNetDataProvider implements RestrictedDataProviderIn
      * @param BattleNetSDK $battleNetSDK
      * @param RequestStack $requestStack
      * @param ResourceMetadataFactoryInterface $resourceMetadataFactory
+     * @param ContainerInterface $container
      */
     public function __construct(BattleNetSDK $battleNetSDK,
-                                RequestStack $requestStack, ResourceMetadataFactoryInterface $resourceMetadataFactory)
+                                RequestStack $requestStack,
+                                ResourceMetadataFactoryInterface $resourceMetadataFactory,
+                                ContainerInterface $container)
     {
         $this->battleNetSDK = $battleNetSDK;
         $this->requestStack = $requestStack;
         $this->resourceMetadataFactory = $resourceMetadataFactory;
+        $this->container = $container;
     }
 
     /**
@@ -93,7 +103,7 @@ abstract class AbstractBattleNetDataProvider implements RestrictedDataProviderIn
     }
 
     /**
-     * @return null|\Symfony\Component\HttpFoundation\Request
+     * @return null|Request
      */
     protected function getRequest()
     {
@@ -117,6 +127,11 @@ abstract class AbstractBattleNetDataProvider implements RestrictedDataProviderIn
         $this->transformer = $transformer;
 
         return $this;
+    }
+
+    public static function getSubscribedServices()
+    {
+        return [];
     }
 
 }

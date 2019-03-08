@@ -39,7 +39,7 @@ class HashPasswordSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-           'kernel.view' => ['onKernelView', EventPriorities::PRE_WRITE]
+            'kernel.view' => ['onKernelView', EventPriorities::PRE_WRITE]
         ];
     }
 }
