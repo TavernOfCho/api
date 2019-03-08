@@ -11,7 +11,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ApiResource(
  *     normalizationContext={"groups"={"user_read"}},
- *     denormalizationContext={"groups"={"user_write"}}
+ *     denormalizationContext={"groups"={"user_write"}},
+ *     itemOperations={
+ *         "get",
+ *         "put"={"access_control"="is_granted('user_update', object)"},
+ *         "delete"={"access_control"="is_granted('user_delete', object)"},
+ *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="users")
@@ -72,7 +77,7 @@ class User implements UserInterface
     private $bnetBattletag;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"user_write", "user_read"})
      */
     private $bnetAccessToken;
@@ -81,7 +86,7 @@ class User implements UserInterface
      * @ORM\Column(type="boolean", options={"default" : true})
      * @Groups({"user_write", "user_read"})
      */
-    private $enabled;
+    private $enabled = true;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -93,7 +98,7 @@ class User implements UserInterface
      * @ORM\Column(type="boolean", options={"default" : true})
      * @Groups({"user_write", "user_read"})
      */
-    private $emailEnabled;
+    private $emailEnabled = true;
 
     public function getId(): ?int
     {
