@@ -9,8 +9,8 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
         public: false       # Allows optimizing the container by removing unused services; this also means
-                            # fetching services directly from the container via $container->get() won't work.
-                            # The best practice is to be explicit about your dependencies anyway.
+        # fetching services directly from the container via $container->get() won't work.
+        # The best practice is to be explicit about your dependencies anyway.
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -46,5 +46,13 @@ services:
     App\Utils\Pagerfanta: ~
 
     App\DataProvider\BattleNet\:
-      resource: '../src/DataProvider/BattleNet'
-      configurator: 'App\DataProvider\BattleNetDataProviderConfigurator:configure'
+        resource: '../src/DataProvider/BattleNet'
+        configurator: 'App\DataProvider\BattleNetDataProviderConfigurator:configure'
+
+
+    App\Serializer\BattleNetNormalizer:
+        decorates: 'api_platform.jsonld.normalizer.item'
+        autowire: false
+        autoconfigure: true
+        arguments:
+            $normalizer: '@App\Serializer\BattleNetNormalizer.inner'
