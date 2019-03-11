@@ -34,7 +34,7 @@ class User implements UserInterface
     /**
      * @var array
      *
-     * @ORM\Column(type="json_array")
+     * @ORM\Column(type="json_array", nullable=true)
      * @Groups({"user_write", "user_read"})
      */
     private $roles = ["ROLE_USER"];
