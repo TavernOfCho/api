@@ -4,14 +4,17 @@ parameters:
     # environment variables are not available yet.
     # You should not need to change this value.
     env(VARNISH_URL): ''
+    env(ELASTICSEARCH_HOST): 'http://elasticsearch:9200'
 
 api_platform:
+    elasticsearch:
+        hosts: ['%env(ELASTICSEARCH_HOST)%']
     mapping:
         paths:
         - '%kernel.project_dir%/config/packages/api_platform'
     resource_class_directories:
-    - '%kernel.project_dir%/src/Entity'
-    - '%kernel.project_dir%/src/Models'
+        - '%kernel.project_dir%/src/Entity'
+        - '%kernel.project_dir%/src/Models'
     title: Hello API Platform
     version: 1.0.0
      Enable the Varnish integration
