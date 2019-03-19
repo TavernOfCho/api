@@ -42,7 +42,7 @@ final class BattleNetNormalizer implements NormalizerInterface, DenormalizerInte
     {
         $normalize = $this->normalizer->normalize($object, $format, $context);
 
-        if (in_array($context['item_operation_name'], self::OPERATIONS)) {
+        if (isset($context['item_operation_name']) && in_array($context['item_operation_name'], self::OPERATIONS)) {
             $normalize['@id'] = $context['request_uri'];
         }
 

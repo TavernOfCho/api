@@ -2,16 +2,9 @@
 
 namespace App\Models;
 
-use ApiPlatform\Core\Annotation\ApiProperty;
-use ApiPlatform\Core\Annotation\ApiResource;
-
-/**
- * @ApiResource()
- */
 class Feed
 {
     /**
-     * @ApiProperty(identifier=true)
      * @var string $type
      */
     private $type;
