@@ -1,0 +1,23 @@
+language: php
+php:
+  - '7.3'
+
+sudo: false
+
+before-install:
+  - composer self-update
+
+install:
+  - composer install
+
+script:
+  - echo "TODO"
+
+deploy:
+  - provider: heroku
+    api_key:
+      secure: m5hE8iYl0LxnEFSUGdDpBxujl5i9aKhs2Rx5CctPgafNFqWcgFCt6rWPfw3wwMheexo9pBQASqGSIJnxAsIkQECrygpuzLTimyOGal5qk6W37+zZPvr/lSRdZ1GWjbkdQPLOYD3U6E1Sb6vU5eGkpbH+W0o2U0p4suvPtf/cGM543UHtm8TQ2Z/fuXro8YpfPxkuRsJkxCF0sdQDcQTYuyyZqkJ5ce/VriObVZosAa+fcxnjI6aZm/hKnf9O06GJJ+ItytTfr/LKybHGdJwIoDderiYio6VDXBep55CZvs+jBz7psOAwBmTzwUfmMRcxxFG66i9ojqDVh3bnnPeUS3GF+KOIjmoMLy1xBn6SjS86nO+udOTxp1qpk0rS+Q1yqJcBcppGO2qQCviEab2ad30QNVOp/PO1QNdkpUGT2qF/V0fBWqJcb8SRicGe8gXXz+Jft9JrSwW+29gTBhoODzXKsU+uy/0Dk/5eQh5EI26Ac6NDNFFn6/8QfkIITiXGdcWKltNqT+YgLTJsA4gYu/9NaMhWPpeIpL54xahWlHiz9+OHPhpIVeKrJKqEXS781zCi3yPzJK2P80rmq4PCvba0nQe5QzHhrqV4Z/Dhmv8gPR6vJRDiIcn7eHRM/kkQ/QMSFqFgo28bEgm0FqrL1KRdCvTARPKNCQXsVjvqFag=
+    app: tavern-of-cho
+    on:
+      repo: TavernOfCho/api
+      branch: heroku
