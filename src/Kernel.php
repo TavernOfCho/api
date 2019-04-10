@@ -2,13 +2,16 @@
 
 namespace App;
 
+use App\Utils\HttpClient;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\RouteCollectionBuilder;
 
-class Kernel extends BaseKernel
+class Kernel extends BaseKernel implements CompilerPassInterface
 {
     use MicroKernelTrait;
 
@@ -57,5 +60,20 @@ class Kernel extends BaseKernel
             $routes->import($confDir.'/routes/'.$this->environment.'/**/*'.self::CONFIG_EXTS, '/', 'glob');
         }
         $routes->import($confDir.'/routes'.self::CONFIG_EXTS, '/', 'glob');
+    }
+
+    /**
+     * You can modify the container here before it is dumped to PHP code.
+     * @param ContainerBuilder $container
+     */
+    public function process(ContainerBuilder $container)
+    {
+        $container->register(HttpClient::class, HttpClient::class)
+            ->addArgument($container->getParameter('kernel.environment'));
+
+        $publisherDefinition = $container->getDefinition('mercure.hub.default.publisher')
+            ->addArgument(new Reference(HttpClient::class));
+
+        $container->setDefinition('mercure.hub.default.publisher', $publisherDefinition);
     }
 }

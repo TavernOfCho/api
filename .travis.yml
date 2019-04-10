@@ -4,11 +4,8 @@ php:
 
 sudo: false
 
-before-install:
-  - composer self-update
-
 install:
-  - composer install
+  - php -v
 
 script:
   - echo "TODO"
@@ -20,4 +17,4 @@ deploy:
     app: tavern-of-cho
     on:
       repo: TavernOfCho/api
-      branch: heroku
+      branch: master
