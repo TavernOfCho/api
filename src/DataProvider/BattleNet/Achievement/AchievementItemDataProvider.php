@@ -5,12 +5,12 @@ namespace App\DataProvider\BattleNet\Achievement;
 use ApiPlatform\Core\DataProvider\ItemDataProviderInterface;
 use ApiPlatform\Core\Exception\ResourceClassNotSupportedException;
 use App\DataProvider\BattleNet\AbstractBattleNetDataProvider;
-use App\DataTransformer\ItemsTransformer;
+use App\DataTransformer\AchievementTransformer;
 use App\Models\Achievement;
 
 /**
  * Class AchievementItemDataProvider
- * @property ItemsTransformer $transformer
+ * @property AchievementTransformer $transformer
  */
 class AchievementItemDataProvider extends AbstractBattleNetDataProvider implements ItemDataProviderInterface
 {
