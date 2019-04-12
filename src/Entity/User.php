@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -99,6 +101,16 @@ class User implements UserInterface
      * @Groups({"user_write", "user_read"})
      */
     private $emailEnabled = true;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\AchievementGroup", inversedBy="users")
+     */
+    private $completedAchievementGroup;
+
+    public function __construct()
+    {
+        $this->completedAchievementGroup = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -276,6 +288,32 @@ class User implements UserInterface
     public function setEmailEnabled(bool $emailEnabled): self
     {
         $this->emailEnabled = $emailEnabled;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AchievementGroup[]
+     */
+    public function getCompletedAchievementGroup(): Collection
+    {
+        return $this->completedAchievementGroup;
+    }
+
+    public function addCompletedAchievementGroup(AchievementGroup $completedAchievementGroup): self
+    {
+        if (!$this->completedAchievementGroup->contains($completedAchievementGroup)) {
+            $this->completedAchievementGroup[] = $completedAchievementGroup;
+        }
+
+        return $this;
+    }
+
+    public function removeCompletedAchievementGroup(AchievementGroup $completedAchievementGroup): self
+    {
+        if ($this->completedAchievementGroup->contains($completedAchievementGroup)) {
+            $this->completedAchievementGroup->removeElement($completedAchievementGroup);
+        }
 
         return $this;
     }
