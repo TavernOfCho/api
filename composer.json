@@ -11,7 +11,7 @@
         "e-moe/guzzle6-bundle": "^1.2",
         "elasticsearch/elasticsearch": "^6.0",
         "friendsofsymfony/elastica-bundle": "^5.0",
-        "gesdinet/jwt-refresh-token-bundle": "^0.5.4",
+        "gesdinet/jwt-refresh-token-bundle": "^0.6",
         "guzzlehttp/guzzle": "^6.3",
         "lexik/jwt-authentication-bundle": "^2.6",
         "nelmio/cors-bundle": "^1.5",
@@ -78,5 +78,11 @@
         "symfony": {
             "allow-contrib": true
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/gesdinet/JWTRefreshTokenBundle"
+        }
+    ]
 }
