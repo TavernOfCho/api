@@ -86,13 +86,6 @@ App\Models\Race:
     collectionOperations:
         get: ~
 
-App\Entity\Objective:
-  collectionOperations:
-    get:
-      filters: ['objective.search_filter']
-    post: ~
-
-
 App\Models\Items:
     itemOperations:
         get:

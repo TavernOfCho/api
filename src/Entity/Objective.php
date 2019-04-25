@@ -6,7 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(attributes={"filters"={"objective.search_filter"}})
  * @ORM\Entity(repositoryClass="App\Repository\ObjectiveRepository")
  * @ORM\Table(name="objective")
  */

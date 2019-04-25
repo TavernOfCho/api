@@ -1,8 +1,7 @@
 services:
-
-    objective.search_filter:
-        parent: 'api_platform.doctrine.orm.search_filter'
-        arguments:
-            - {bnet_user: 'exact'}
-        tags:  [ 'api_platform.filter' ]
+  objective.search_filter:
+    parent: 'api_platform.doctrine.orm.search_filter'
+    arguments:
+      - {bnet_user: 'exact'}
+    tags: [ 'api_platform.filter' ]
 
