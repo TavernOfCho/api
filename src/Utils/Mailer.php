@@ -44,7 +44,6 @@ class Mailer
 
     public function sendMail(string $subject, string $to, string $viewPath, array $viewParameters = null)
     {
-        var_dump("sending mail");
         $mail =  new \Swift_Message();
         $mail = $mail
             ->setSubject($subject)
