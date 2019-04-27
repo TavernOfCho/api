@@ -9,6 +9,7 @@ use App\DataProvider\Traits\RealmFilterTrait;
 use App\DataTransformer\CharacterTransformer;
 use App\DataTransformer\GuildTransformer;
 use App\DataTransformer\ItemsTransformer;
+use App\DataTransformer\PetsTransformer;
 use App\DataTransformer\StatsTransformer;
 use App\Models\Character;
 
@@ -66,6 +67,16 @@ class CharacterItemDataProvider extends AbstractBattleNetDataProvider implements
             return $statsTransformer->transformItem($character['stats']);
         }
 
+        if ($operationName === 'character_pets') {
+            $realm = $this->getRealm();
+            $petsTransformer = $this->container->get(PetsTransformer::class);
+
+            $character = $this->battleNetSDK->getCharacter($id, $realm, 'pets');
+            $character['pets']['name'] = $character['name'];
+
+            return $petsTransformer->transformItem($character['pets']);
+        }
+
         throw new ResourceClassNotSupportedException();
     }
 
@@ -78,6 +89,7 @@ class CharacterItemDataProvider extends AbstractBattleNetDataProvider implements
             'App\DataTransformer\ItemsTransformer',
             'App\DataTransformer\GuildTransformer',
             'App\DataTransformer\StatsTransformer',
+            'App\DataTransformer\PetsTransformer',
         ];
     }
 }

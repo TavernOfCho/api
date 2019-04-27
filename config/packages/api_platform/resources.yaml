@@ -28,6 +28,13 @@ App\Models\Character:
             swagger_context:
                 summary: "Retrieve an achievement list with specific filters for a character"
                 description: "Retrieve an achievement list with specific filters for a character"
+        character_pets:
+            method: GET
+            path: /characters/{id}/{realm}/pets
+            controller: 'App\Controller\Api\DefaultAction'
+            swagger_context:
+                summary: "Retrieve a list of pets with specific filters for a character"
+                description: "Retrieve a pets list with specific filters for a character"
     collectionOperations:
         get:
             controller: 'App\Controller\Api\BlankAction'
