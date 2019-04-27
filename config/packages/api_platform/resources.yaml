@@ -55,6 +55,13 @@ App\Models\Character:
             swagger_context:
                 summary: "Retrieve a list of feed with specific filters for a character"
                 description: "Retrieve an achievement list with specific filters for a character"
+        character_reputations:
+            method: GET
+            path: /characters/{id}/{realm}/reputations
+            controller: 'App\Controller\Api\DefaultAction'
+            swagger_context:
+                summary: "Retrieve a list of reputation with specific filters for a character"
+                description: "Retrieve a reputation list with specific filters for a character"
 
 App\Models\Achievement:
     itemOperations:
