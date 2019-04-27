@@ -58,3 +58,7 @@ services:
         autoconfigure: true
         arguments:
             $normalizer: '@App\Serializer\BattleNetNormalizer.inner'
+
+    App\EventSubscriber\CacheSubscriber:
+        arguments:
+            $cacheManager: '@cache.battle_net' # See framework.yaml and cache.battle_net pool
