@@ -4,6 +4,8 @@ parameters:
     locale: 'en'
     env(MERCURE_PUBLISH_URL): ''
     env(MERCURE_JWT_SECRET): ''
+    mail_sender: "tavernofcho@gmail.com"
+    env(WEBSITE_URL): 'https://tavernofcho.com'
 
 services:
     # default configuration for services in *this* file
@@ -58,3 +60,11 @@ services:
         autoconfigure: true
         arguments:
             $normalizer: '@App\Serializer\BattleNetNormalizer.inner'
+
+    App\Utils\Mailer:
+        arguments:
+            $mailSender: "%mail_sender%"
+
+    App\EventSubscriber\UserActivationSubscriber:
+        arguments:
+            $websiteUrl: "%env(WEBSITE_URL)%"

@@ -1,0 +1,10 @@
+<h1>Valider votre compte TavernOfCho</h1>
+
+{% set link_verification = domain ~ "/account/validation/"~code %}
+<p>
+    Pour valider votre compte sur TavernOfCho, merci de passer par le lien suivant
+    <a href="{{ link_verification }}">{{ link_verification }}</a>.
+</p>
+<p>Ce lien expirera le {{ ""|date("d/m \\à G:i") }}</p>
+
+<p>Si cet email ne vous est pas destiné, merci de l'ignorer.</p>

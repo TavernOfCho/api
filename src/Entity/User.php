@@ -85,10 +85,16 @@ class User implements UserInterface
     private $bnetAccessToken;
 
     /**
-     * @ORM\Column(type="boolean", options={"default" : true})
+     * @ORM\Column(type="boolean", options={"default" : false})
      * @Groups({"user_write", "user_read"})
      */
-    private $enabled = true;
+    private $enabled = false;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"user_write", "user_read"})
+     */
+    private $enabledCode;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -106,6 +112,11 @@ class User implements UserInterface
      * @ORM\ManyToMany(targetEntity="App\Entity\AchievementGroup", inversedBy="users")
      */
     private $completedAchievementGroup;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $enabledCodeDate;
 
     public function __construct()
     {
@@ -268,6 +279,18 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getEnabledCode(): ?string
+    {
+        return $this->enabledCode;
+    }
+
+    public function setEnabledCode(?string $enabledCode): self
+    {
+        $this->enabledCode = $enabledCode;
+
+        return $this;
+    }
+
     public function getEmail(): ?string
     {
         return $this->email;
@@ -314,6 +337,18 @@ class User implements UserInterface
         if ($this->completedAchievementGroup->contains($completedAchievementGroup)) {
             $this->completedAchievementGroup->removeElement($completedAchievementGroup);
         }
+
+        return $this;
+    }
+
+    public function getEnabledCodeDate(): ?\DateTime
+    {
+        return $this->enabledCodeDate;
+    }
+
+    public function setEnabledCodeDate(?\DateTime $enabledCodeDate): self
+    {
+        $this->enabledCodeDate = $enabledCodeDate;
 
         return $this;
     }
