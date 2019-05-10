@@ -61,6 +61,10 @@ services:
         arguments:
             $normalizer: '@App\Serializer\BattleNetNormalizer.inner'
 
+    App\EventSubscriber\CacheSubscriber:
+        arguments:
+            $cacheManager: '@cache.battle_net' # See framework.yaml and cache.battle_net pool
+
     App\Utils\Mailer:
         arguments:
             $mailSender: "%mail_sender%"
