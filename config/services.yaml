@@ -4,6 +4,8 @@ parameters:
     locale: 'en'
     env(MERCURE_PUBLISH_URL): ''
     env(MERCURE_JWT_SECRET): ''
+    mail_sender: "tavernofcho@gmail.com"
+    env(WEBSITE_URL): 'https://tavernofcho.com'
 
 services:
     # default configuration for services in *this* file
@@ -62,3 +64,11 @@ services:
     App\EventSubscriber\CacheSubscriber:
         arguments:
             $cacheManager: '@cache.battle_net' # See framework.yaml and cache.battle_net pool
+
+    App\Utils\Mailer:
+        arguments:
+            $mailSender: "%mail_sender%"
+
+    App\EventSubscriber\UserActivationSubscriber:
+        arguments:
+            $websiteUrl: "%env(WEBSITE_URL)%"
