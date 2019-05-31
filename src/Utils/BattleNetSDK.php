@@ -2,15 +2,15 @@
 
 namespace App\Utils;
 
-use GuzzleHttp\Client;
 use Psr\Cache\CacheItemPoolInterface;
-use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Contracts\HttpClient\ResponseInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class BattleNetSDK
 {
-    /** @var Client $client */
+    /** @var HttpClientInterface $client */
     private $client;
 
     /** @var string $client_id */
@@ -34,12 +34,12 @@ class BattleNetSDK
      * @param string $client_secret
      * @param SessionInterface $session
      * @param CacheItemPoolInterface $cacheManager
-     * @param Client $client
+     * @param HttpClientInterface $battleNetClient
      */
     public function __construct(string $client_id, string $client_secret, SessionInterface $session,
-                                CacheItemPoolInterface $cacheManager, Client $client)
+                                CacheItemPoolInterface $cacheManager, HttpClientInterface $battleNetClient)
     {
-        $this->client = $client;
+        $this->client = $battleNetClient;
         $this->client_id = $client_id;
         $this->client_secret = $client_secret;
         $this->session = $session;
@@ -204,11 +204,11 @@ class BattleNetSDK
     private function generateAccessToken()
     {
         $response = $this->client->request("POST", "https://eu.battle.net/oauth/token", [
-            'form_params' => ['grant_type' => 'client_credentials'],
-            'auth' => [$this->client_id, $this->client_secret]
+            'body' => ['grant_type' => 'client_credentials'],
+            'auth_basic' => [$this->client_id, $this->client_secret]
         ]);
 
-        $data = json_decode($response->getBody()->getContents(), true);
+        $data = json_decode($response->getContent(false), true);
 
         $this->session->set('access_token', [
             'access_token' => $data['access_token'],
@@ -236,20 +236,7 @@ class BattleNetSDK
      */
     private function getJsonContent(ResponseInterface $response)
     {
-        $this->verifyStatus($response);
-
-        return json_decode($response->getBody()->getContents(), true);
-    }
-
-    /**
-     * @param ResponseInterface $response
-     * @param int $code
-     */
-    private function verifyStatus(ResponseInterface $response, int $code = 200)
-    {
-        if ($response->getStatusCode() != $code) {
-            throw new \Exception("Error");
-        }
+        return json_decode($response->getContent(), true);
     }
 
     /**
