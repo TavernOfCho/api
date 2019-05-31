@@ -3,7 +3,7 @@ fos_elastica:
     clients:
         default: 
             host: '%env(ELASTICSEARCH_HOST)%'
-            port: 9200
+            port: 443
             headers:
                 Authorization: "Basic %env(base64:ELASTICSEARCH_AUTH)%"
             ssl: true
