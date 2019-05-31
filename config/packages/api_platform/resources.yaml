@@ -148,3 +148,13 @@ App\Models\Guild:
             swagger_context:
                 summary: "Disabled action, will always return null"
                 description: "Disabled action, will always return null"
+
+App\Models\Mount:
+    itemOperations:
+        get:
+            controller: 'App\Controller\Api\BlankAction'
+            swagger_context:
+                summary: "Disabled action, will always return null"
+                description: "Disabled action, will always return null"
+    collectionOperations:
+        get: ~
