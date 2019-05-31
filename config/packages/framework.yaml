@@ -26,3 +26,12 @@ framework:
 
         # APCu (not recommended with heavy random-write workloads as memory fragmentation can cause perf issues)
         #app: cache.adapter.apcu
+
+    http_client:
+        scoped_clients:
+            battle_net_client:
+                base_uri: 'https://eu.api.blizzard.com/'
+                timeout: 30 
+
+    validation:
+        auto_mapping: {'App\\': {}}
