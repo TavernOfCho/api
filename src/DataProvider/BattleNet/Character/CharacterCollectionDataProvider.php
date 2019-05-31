@@ -9,6 +9,7 @@ use App\DataProvider\Traits\RealmFilterTrait;
 use App\DataTransformer\AchievementTransformer;
 use App\DataTransformer\CharacterTransformer;
 use App\DataTransformer\FeedTransformer;
+use App\DataTransformer\ReputationTransformer;
 use App\Models\Character;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -102,6 +103,17 @@ class CharacterCollectionDataProvider extends AbstractBattleNetDataProvider impl
             return $this->paginate($collection, $resourceClass, $operationName);
         }
 
+        if ($operationName == 'character_reputations') {
+            $realm = $this->getRealm();
+            $character = $this->getRequest()->attributes->get('id');
+            $character = $this->battleNetSDK->getCharacter($character, $realm, 'reputation');
+            $reputationTransformer = $this->container->get(ReputationTransformer::class);
+            $elements = $reputationTransformer->transformCollection($character);
+
+            $collection = new ArrayCollection($elements);
+
+            return $this->paginate($collection, $resourceClass, $operationName);
+        }
 
         throw new ResourceClassNotSupportedException();
     }
@@ -114,6 +126,7 @@ class CharacterCollectionDataProvider extends AbstractBattleNetDataProvider impl
         return [
             'App\DataTransformer\AchievementTransformer',
             'App\DataTransformer\FeedTransformer',
+            'App\DataTransformer\ReputationTransformer',
         ];
     }
 
