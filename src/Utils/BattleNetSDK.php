@@ -141,6 +141,24 @@ class BattleNetSDK
         }, 'character_races', self::LONG_TIME);
     }
 
+    /**
+     * @return array
+     */
+    public function getMounts()
+    {
+        return $this->cacheHandle(function () {
+            $response = $this->client->request('GET', '/wow/mount/', [
+                'query' => [
+                    'region' => 'eu',
+                    'locale' => 'fr_FR',
+                    'access_token' => $this->getAccessToken()
+                ]
+            ]);
+
+            return $this->getJsonContent($response);
+        }, 'mount', self::LONG_TIME);
+    }
+
 
     /**
      * @param string $id
