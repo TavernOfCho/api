@@ -5,12 +5,13 @@ parameters:
     # You should not need to change this value.
     env(VARNISH_URL): ''
     env(ELASTICSEARCH_HOST): 'http://elasticsearch:9200'
+    env(ELASTICSEARCH_HOST_FULL): '%env(ELASTICSEARCH_HOST)'
 
 api_platform:
     mercure:
         hub_url: '%env(MERCURE_SUBSCRIBE_URL)%'
     elasticsearch:
-        hosts: ['%env(ELASTICSEARCH_HOST)%']
+        hosts: ['%env(ELASTICSEARCH_HOST_FULL)%']
     mapping:
         paths:
         - '%kernel.project_dir%/config/packages/api_platform'

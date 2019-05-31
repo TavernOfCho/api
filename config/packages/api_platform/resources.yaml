@@ -35,6 +35,13 @@ App\Models\Character:
             swagger_context:
                 summary: "Retrieve a list of pets with specific filters for a character"
                 description: "Retrieve a pets list with specific filters for a character"
+        character_mounts:
+            method: GET
+            path: /characters/{id}/{realm}/mounts
+            controller: 'App\Controller\Api\DefaultAction'
+            swagger_context:
+                summary: "Retrieve a list of mounts with specific filters for a character"
+                description: "Retrieve a mounts list with specific filters for a character"
     collectionOperations:
         get:
             controller: 'App\Controller\Api\BlankAction'
