@@ -7,7 +7,7 @@ use App\Entity\User;
 use App\Utils\Mailer;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+use Symfony\Component\HttpKernel\Event\ViewEvent;
 
 class UserActivationSubscriber implements EventSubscriberInterface
 {
@@ -28,7 +28,7 @@ class UserActivationSubscriber implements EventSubscriberInterface
         $this->websiteUrl = $websiteUrl;
     }
 
-    public function onKernelView(GetResponseForControllerResultEvent $event)
+    public function onKernelView(ViewEvent $event)
     {
         /** @var User $entity */
         $entity = $event->getControllerResult();
