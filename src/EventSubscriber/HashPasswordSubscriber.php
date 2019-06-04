@@ -6,7 +6,7 @@ use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\User;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -24,7 +24,7 @@ class HashPasswordSubscriber implements EventSubscriberInterface
         $this->passwordEncoder = $passwordEncoder;
     }
 
-    public function onKernelView(GetResponseForControllerResultEvent $event)
+    public function onKernelView(ViewEvent $event)
     {
         /** @var User $entity */
         $entity = $event->getControllerResult();

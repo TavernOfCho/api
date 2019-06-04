@@ -4,7 +4,7 @@ namespace App\EventSubscriber;
 
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 class CacheSubscriber implements EventSubscriberInterface
 {
@@ -18,7 +18,7 @@ class CacheSubscriber implements EventSubscriberInterface
         $this->cacheManager = $cacheManager;
     }
 
-    public function onKernelRequest(GetResponseEvent $event)
+    public function onKernelRequest(RequestEvent $event)
     {
         if ($event->getRequest()->headers->get('Custom-Cache-Control') === "clear-battle-net") {
             $session = $event->getRequest()->getSession();
