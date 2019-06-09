@@ -38,6 +38,7 @@ class RealmCollectionDataProvider extends AbstractBattleNetDataProvider implemen
 
             $data = $this->transformer->transformCollection($realms);
             $collection = new ArrayCollection($data);
+
             return $this->paginate($collection, $resourceClass, $operationName);
         }
 
