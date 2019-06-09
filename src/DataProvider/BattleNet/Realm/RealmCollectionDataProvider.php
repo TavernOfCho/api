@@ -30,6 +30,12 @@ class RealmCollectionDataProvider extends AbstractBattleNetDataProvider implemen
                 return $this->battleNetSDK->getRealm($realm['slug']);
             }, $realms['realms']);
 
+            if (null !== $locale = $this->getRequest()->query->get('locale')) {
+                $realms = array_filter($realms, function($realm) use($locale) {
+                    return $realm['locale'] === $locale;
+                });
+            }
+
             $data = $this->transformer->transformCollection($realms);
             $collection = new ArrayCollection($data);
 
