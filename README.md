@@ -28,3 +28,27 @@ Run the following command :
 ```bash
 curl -XPUT -H "Content-Type: application/json" http://localhost:9200/_all/_settings -d '{"index.blocks.read_only_allow_delete": null}'
 ```
+
+#### BattleNet Endpoint Models :
+
+**Achievement**
+
+| Model       | Endpoint                                              | Type             |
+| ----        | ----------                                            | ----------       |
+| ----        | _Character_                                           | ----------       |
+| Achievement | /characters/{username}/{realm}/achievements/completed | GET (collection) | 
+| Achievement | /characters/{username}/{realm}/achievements           | GET (collection) | 
+| Character   | /characters/{username}?realm={realm}                  | GET (item)       |
+| Feed        | /characters/{username}/{realm}/feeds                  | GET (collection) |
+| Guild       | /characters/{username}/{realm}/guild                  | GET (item)       |
+| Items       | /characters/{username}/{realm}/items                  | GET (item)       |
+| Mount       | /characters/{username}/{realm}/mounts                 | GET (item)       |
+| Pets        | /characters/{username}/{realm}/pets                   | GET (item)       |
+| Reputation  | /characters/{username}/{realm}/reputations            | GET (collection) |
+| Stats       | /characters/{username}/{realm}/stats                  | GET (item)       |
+| ----        | _Others_                                              | ----------       |
+| Classes     | /classes                                              | GET (collection) |
+| Mounts      | /mounts                                               | GET (collection) |
+| Race        | /races                                                | GET (collection) |
+| Realm       | /realm/{realm}                                        | GET (item)       |
+| Realm       | /realm                                                | GET (collection) |
