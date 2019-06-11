@@ -180,12 +180,11 @@ class BattleNetSDK
     }
 
     /**
-     * @param int $factionId
      * @return array
      */
-    public function getAchievements(int $factionId): array
+    public function getAchievements(): array
     {
-        return $this->cacheHandle(function () use ($factionId) {
+        return $this->cacheHandle(function () {
             $response = $this->client->request('GET', '/wow/data/character/achievements', [
                 'query' => [
                     'region' => 'eu',
