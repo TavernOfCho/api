@@ -12,6 +12,11 @@ Libaries :
 php bin/console fos:elastica:populate
 ```
 
+**Populate the database (fixtures)**
+```bash
+php bin/console hautelook:fixtures:load
+```
+
 ### Troubleshooting :
 
 During the populate, if you have an error similar to this :

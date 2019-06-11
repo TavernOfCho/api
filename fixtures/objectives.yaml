@@ -1,0 +1,9 @@
+App\Entity\Objective:
+    objective_{0..5}:
+        title: <title()>
+        ending_date: <dateTimeThisYear()>
+        achievement_id: <achievement_id()>
+        character: <character()>
+        realm: <realm()>
+        bnet_user: '@user*'
+            

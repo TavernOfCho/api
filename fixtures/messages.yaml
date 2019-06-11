@@ -1,0 +1,3 @@
+App\Entity\Message:
+    message_{0..30}:
+        text: <text()>

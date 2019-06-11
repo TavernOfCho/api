@@ -66,3 +66,5 @@ services:
     App\EventSubscriber\UserActivationSubscriber:
         arguments:
             $websiteUrl: "%env(WEBSITE_URL)%"
+
+    App\Faker\Provider\BattleNetProvider: ~
