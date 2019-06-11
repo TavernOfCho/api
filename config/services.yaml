@@ -67,4 +67,3 @@ services:
         arguments:
             $websiteUrl: "%env(WEBSITE_URL)%"
 
-    App\Faker\Provider\BattleNetProvider: ~
