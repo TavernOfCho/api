@@ -48,9 +48,6 @@ abstract class AbstractTransformer implements TransformerInterface
     {
         foreach ($data as $key => $item) {
             if ($this->propertyAccessor->isReadable($object, $key)) {
-                if ($key == 'emblem') {
-                    var_dump($item);
-                }
                 $item = $callback($item, $key, $object);
                 $this->propertyAccessor->setValue($object, $key, $item);
             }
