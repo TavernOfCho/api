@@ -23,6 +23,16 @@ class Message
      */
     private $text;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="messages")
+     */
+    private $sender;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="messages")
+     */
+    private $receiver;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -36,6 +46,30 @@ class Message
     public function setText(string $text): self
     {
         $this->text = $text;
+
+        return $this;
+    }
+
+    public function getSender(): ?User
+    {
+        return $this->sender;
+    }
+
+    public function setSender(?User $sender): self
+    {
+        $this->sender = $sender;
+
+        return $this;
+    }
+
+    public function getReceiver(): ?User
+    {
+        return $this->receiver;
+    }
+
+    public function setReceiver(?User $receiver): self
+    {
+        $this->receiver = $receiver;
 
         return $this;
     }
