@@ -15,8 +15,8 @@ class WebTestCase extends BaseWebTestCase
     /** @var KernelBrowser */
     protected $kernelBrowser;
 
-    /** @var User $user */
-    protected $user;
+    /** @var string $accessToken */
+    protected $accessToken;
 
     protected function setUp()
     {
@@ -27,6 +27,8 @@ class WebTestCase extends BaseWebTestCase
             'HTTPS' => self::$container->getParameter('https'),
             'HTTP_HOST' => self::$container->getParameter('http_host')
         ]);
+
+        $this->accessToken = $this->initAccessToken();
     }
 
 
@@ -42,7 +44,7 @@ class WebTestCase extends BaseWebTestCase
         $server = [
             'CONTENT_TYPE' => 'application/ld+json',
             'HTTP_ACCEPT' => 'application/ld+json',
-            'HTTP_AUTHORIZATION' => sprintf('Bearer %s', $this->getAccessToken())
+            'HTTP_AUTHORIZATION' => sprintf('Bearer %s', $this->accessToken)
         ];
         foreach ($headers as $key => $value) {
             if (strtolower($key) === 'content-type') {
@@ -70,13 +72,16 @@ class WebTestCase extends BaseWebTestCase
         return static::$container->get('api_platform.iri_converter')->getIriFromitem($resource);
     }
 
-    protected function getAccessToken()
+    protected function initAccessToken()
     {
+        /** @var User $user */
+        $user = static::$container->get('doctrine')->getRepository(User::class)->findOneBy(['username' => 'john']);
+
         $this->kernelBrowser->request('POST', '/login_check', [], [], [
             'CONTENT_TYPE' => 'application/json'
         ], json_encode([
-            'username' => $this->getUser()->getUsername(),
-            'password' => $this->getUser()->getPlainPassword(),
+            'username' => $user->getUsername(),
+            'password' => 'test',
         ]));
 
         $response = $this->kernelBrowser->getResponse();
@@ -84,14 +89,4 @@ class WebTestCase extends BaseWebTestCase
 
         return $accessToken['token'];
     }
-
-    /**
-     * @return User
-     */
-    protected function getUser()
-    {
-        return $this->user ?: $this->user = static::$container->get('doctrine')->getRepository(User::class)->findOneBy([]);
-    }
-
-
 }

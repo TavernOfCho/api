@@ -1,0 +1,5 @@
+parameters:
+    env(HTTPS): 'false'
+    env(HTTP_HOST): 'localhost'
+    http_host: '%env(HTTP_HOST)%' 
+    https: '%env(HTTPS)%' 

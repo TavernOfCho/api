@@ -5,3 +5,9 @@ App\Entity\User:
         email: <email()>
         enabled: true
         enabled_code_date: <date_create()>
+    user_john: # Used in tests
+        username: 'john'
+        plainPassword: 'test'
+        email: 'john@gmail.com'
+        enabled: true
+        enabled_code_date: <date_create()>
