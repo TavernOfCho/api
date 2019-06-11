@@ -1,7 +1,8 @@
 # Read the documentation: https://github.com/FriendsOfSymfony/FOSElasticaBundle/blob/master/Resources/doc/setup.md
+
 fos_elastica:
     indexes:
-        app:
+        app_user:
             types:
                 user:
                     properties:
@@ -19,4 +20,46 @@ fos_elastica:
                         model: App\Entity\User
                         provider: ~
                         finder: ~
+                        
+        app_achievement_group:
+            types:
+                achievement_group:
+                    properties:
+                        name: ~
+                        achievements: ~
+                        achievementsDetails: ~
+                    persistence:
+                        driver: orm
+                        model: App\Entity\AchievementGroup
+                        provider: ~
+                        finder: ~
+        app_message:
+            types:
+                message:
+                    properties:
+                        text: ~
+                        sender: ~
+                        receiver: ~
+                    persistence:
+                        driver: orm
+                        model: App\Entity\Message
+                        provider: ~
+                        finder: ~
+        app_objective:
+            types:
+                objective:
+                    properties:
+                        title: ~
+                        ending_date: ~
+                        achievement_id: ~
+                        character: ~
+                        realm: ~
+                        mail_sent: ~
+                        bnet_user: ~
+                    persistence:
+                        driver: orm
+                        model: App\Entity\Objective
+                        provider: ~
+                        finder: ~                    
 
+                        
