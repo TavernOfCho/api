@@ -18,6 +18,9 @@ abstract class WebTestCase extends BaseWebTestCase
     /** @var string $accessToken */
     protected $accessToken;
 
+    /** @var string $username */
+    protected $username = 'john';
+
     protected function setUp()
     {
         parent::setUp();
@@ -36,15 +39,20 @@ abstract class WebTestCase extends BaseWebTestCase
      * @param string $uri
      * @param string|array|null $content
      * @param array $headers
+     * @param bool $authorization
      * @return Response
      */
-    protected function request(string $method, string $uri, $content = null, array $headers = []): Response
+    protected function request(string $method, string $uri, $content = null, array $headers = [], bool $authorization = true): Response
     {
         $server = [
             'CONTENT_TYPE' => 'application/ld+json',
             'HTTP_ACCEPT' => 'application/ld+json',
             'HTTP_AUTHORIZATION' => sprintf('Bearer %s', $this->accessToken)
         ];
+
+        if (!$authorization) {
+            unset($server['HTTP_AUTHORIZATION']);
+        }
 
         foreach ($headers as $key => $value) {
             if (strtolower($key) === 'content-type') {
@@ -79,8 +87,12 @@ abstract class WebTestCase extends BaseWebTestCase
 
     protected function initAccessToken()
     {
+        if (null === $this->username) {
+            return false;
+        }
+
         /** @var User $user */
-        $user = static::$container->get('doctrine')->getRepository(User::class)->findOneBy(['username' => 'john']);
+        $user = static::$container->get('doctrine')->getRepository(User::class)->findOneBy(['username' => $this->username]);
 
         $this->kernelBrowser->request('POST', '/login_check', [], [], [
             'CONTENT_TYPE' => 'application/json'
