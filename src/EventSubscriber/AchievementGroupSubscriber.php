@@ -8,7 +8,6 @@ use App\Entity\AchievementGroup;
 use App\Utils\BattleNetSDK;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpClient\Exception\ClientException;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
 
 class AchievementGroupSubscriber implements EventSubscriberInterface
@@ -40,9 +39,8 @@ class AchievementGroupSubscriber implements EventSubscriberInterface
     public function onKernelView(ViewEvent $event)
     {
         $entity = $event->getControllerResult();
-        $method = $event->getRequest()->getMethod();
 
-        if ($entity instanceof AchievementGroup && $method === Request::METHOD_GET) {
+        if ($entity instanceof AchievementGroup) {
             $achievementsDetails = array_map(function ($achievement) {
                 try {
                     return $this->transformer->transformItem($this->battleNetSDK->getAchievement($achievement));
