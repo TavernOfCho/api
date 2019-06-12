@@ -20,6 +20,9 @@ script:
   - php bin/console doctrine:schema:update --force
   - php bin/phpunit
 
+after_success:
+  - travis_retry php vendor/bin/php-coveralls -v
+
 deploy:
   - provider: heroku
     api_key:

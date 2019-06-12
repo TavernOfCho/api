@@ -203,6 +203,9 @@
     "pagerfanta/pagerfanta": {
         "version": "v2.0.1"
     },
+    "php-coveralls/php-coveralls": {
+        "version": "v2.1.0"
+    },
     "php-cs-fixer/diff": {
         "version": "v1.2.0"
     },

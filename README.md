@@ -1,4 +1,8 @@
-# WowCollection API
+# TavernOfCho API
+
+[![Build Status](https://api.travis-ci.com/TavernOfCho/api.svg?branch=develop)](https://travis-ci.org/okty-io/okty-server) 
+[![Coverage Status](https://coveralls.io/repos/github/TavernOfCho/api/badge.svg?branch=develop)](https://coveralls.io/github/Tavernofcho/api?branch=develop)
+
 
 ## ElasticSearch 
 
