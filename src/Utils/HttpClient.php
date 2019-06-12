@@ -15,10 +15,6 @@ class HttpClient
 
     public function __invoke(string $url, string $jwt, string $postData)
     {
-        if ("dev" === $this->kernelEnv) {
-            $postData = str_replace(urlencode('https://localhost:8052'), urlencode('http://api'), $postData);
-        }
-
         $result = file_get_contents($url, false, stream_context_create(['http' => [
             'method' => 'POST',
             'header' => "Content-type: application/x-www-form-urlencoded\r\nAuthorization: Bearer $jwt",
