@@ -3,3 +3,5 @@ parameters:
     env(HTTP_HOST): 'localhost'
     http_host: '%env(HTTP_HOST)%' 
     https: '%env(HTTPS)%' 
+    mercure.dummy: '%env(MERCURE_SUBSCRIBE_URL)%'
+    elasticsearch.dummy: '%env(ELASTICSEARCH_HOST_FULL)%'
