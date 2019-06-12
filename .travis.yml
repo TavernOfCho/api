@@ -17,6 +17,7 @@ install:
   - composer install
 
 script:
+  - php bin/console doctrine:schema:update --force
   - php bin/phpunit
 
 deploy:
