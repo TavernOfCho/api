@@ -3,9 +3,7 @@
 
 namespace App\Tests;
 
-use Symfony\Component\HttpFoundation\Response;
-
-class CharacterApiTest extends WebTestCase
+class BattleNetCharacterApiTest extends WebTestCase
 {
 
     /**
@@ -133,28 +131,6 @@ class CharacterApiTest extends WebTestCase
         return [
             ['Zengg', 'Dalaran']
         ];
-    }
-
-    protected function assertCollectionOperation(Response $response, array $json)
-    {
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals('application/ld+json; charset=utf-8', $response->headers->get('Content-Type'));
-
-        $this->assertArrayHasKey('hydra:totalItems', $json);
-        $this->assertGreaterThan(0, $json['hydra:totalItems']);
-
-        $this->assertArrayHasKey('hydra:member', $json);
-        $this->assertCount(30, $json['hydra:member']);
-    }
-
-    protected function assertItemOperation(Response $response, array $json)
-    {
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals('application/ld+json; charset=utf-8', $response->headers->get('Content-Type'));
-
-        $this->assertArrayHasKey('@context', $json);
-        $this->assertArrayHasKey('@id', $json);
-        $this->assertArrayHasKey('@type', $json);
     }
 
     protected function characterUrl(string $url, string $username, string $realm)

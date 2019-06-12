@@ -50,5 +50,5 @@ curl -XPUT -H "Content-Type: application/json" http://localhost:9200/_all/_setti
 | Classes     | /classes                                              | GET (collection) |
 | Mounts      | /mounts                                               | GET (collection) |
 | Race        | /races                                                | GET (collection) |
-| Realm       | /realm/{realm}                                        | GET (item)       |
-| Realm       | /realm                                                | GET (collection) |
+| Realm       | /realms/{realm}                                       | GET (item)       |
+| Realm       | /realms                                               | GET (collection) |

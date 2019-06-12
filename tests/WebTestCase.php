@@ -31,7 +31,6 @@ class WebTestCase extends BaseWebTestCase
         $this->accessToken = $this->initAccessToken();
     }
 
-
     /**
      * @param string $method
      * @param string $uri
@@ -46,6 +45,7 @@ class WebTestCase extends BaseWebTestCase
             'HTTP_ACCEPT' => 'application/ld+json',
             'HTTP_AUTHORIZATION' => sprintf('Bearer %s', $this->accessToken)
         ];
+
         foreach ($headers as $key => $value) {
             if (strtolower($key) === 'content-type') {
                 $server['CONTENT_TYPE'] = $value;
@@ -65,6 +65,11 @@ class WebTestCase extends BaseWebTestCase
         return $this->kernelBrowser->getResponse();
     }
 
+    /**
+     * @param string $resourceClass
+     * @param array $criteria
+     * @return string
+     */
     protected function findOneIriBy(string $resourceClass, array $criteria): string
     {
         $resource = static::$container->get('doctrine')->getRepository($resourceClass)->findOneBy($criteria);
@@ -88,5 +93,39 @@ class WebTestCase extends BaseWebTestCase
         $accessToken = json_decode($response->getContent(), true);
 
         return $accessToken['token'];
+    }
+
+    /**
+     * @param Response $response
+     * @param array $json
+     * @param bool $weak
+     */
+    protected function assertCollectionOperation(Response $response, array $json, bool $weak = false)
+    {
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals('application/ld+json; charset=utf-8', $response->headers->get('Content-Type'));
+
+        $this->assertArrayHasKey('hydra:totalItems', $json);
+        $this->assertGreaterThan(0, $json['hydra:totalItems']);
+
+        $this->assertArrayHasKey('hydra:member', $json);
+
+        if (!$weak) {
+            $this->assertCount(30, $json['hydra:member']);
+        }
+    }
+
+    /**
+     * @param Response $response
+     * @param array $json
+     */
+    protected function assertItemOperation(Response $response, array $json)
+    {
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals('application/ld+json; charset=utf-8', $response->headers->get('Content-Type'));
+
+        $this->assertArrayHasKey('@context', $json);
+        $this->assertArrayHasKey('@id', $json);
+        $this->assertArrayHasKey('@type', $json);
     }
 }
