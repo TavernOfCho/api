@@ -1,16 +1,17 @@
 <?php
 
-
 namespace App\EventSubscriber;
 
+use ApiPlatform\Core\EventListener\EventPriorities;
 use App\DataTransformer\AchievementTransformer;
 use App\Entity\AchievementGroup;
 use App\Utils\BattleNetSDK;
-use Doctrine\Common\EventSubscriber;
-use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
-use Doctrine\ORM\Events;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpClient\Exception\ClientException;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Event\ViewEvent;
 
-class AchievementGroupSubscriber implements EventSubscriber
+class AchievementGroupSubscriber implements EventSubscriberInterface
 {
     /**
      * @var BattleNetSDK $battleNetSDK
@@ -34,28 +35,34 @@ class AchievementGroupSubscriber implements EventSubscriber
     }
 
     /**
-     * Returns an array of events this subscriber wants to listen to.
-     *
-     * @return string[]
+     * @param ViewEvent $event
      */
-    public function getSubscribedEvents()
+    public function onKernelView(ViewEvent $event)
     {
-        return [
-            Events::postLoad,
-        ];
+        $entity = $event->getControllerResult();
+        $method = $event->getRequest()->getMethod();
+
+        if ($entity instanceof AchievementGroup && $method === Request::METHOD_GET) {
+            $achievementsDetails = array_map(function ($achievement) {
+                try {
+                    return $this->transformer->transformItem($this->battleNetSDK->getAchievement($achievement));
+                } catch (ClientException $e) {
+                    return null;
+                }
+            }, $entity->getAchievements());
+
+            $achievementsDetails = array_filter($achievementsDetails);
+            $entity->setAchievementsDetails($achievementsDetails);
+        }
     }
 
     /**
-     * @param LifecycleEventArgs $args
+     * @return array
      */
-    public function postLoad(LifecycleEventArgs $args)
+    public static function getSubscribedEvents()
     {
-        /** @var AchievementGroup $achievementGroup */
-        $achievementGroup = $args->getObject();
-        $achievementsDetails = array_map(function ($achievement) {
-            return $this->transformer->transformItem($this->battleNetSDK->getAchievement($achievement));
-        }, $achievementGroup->getAchievements());
-
-        $achievementGroup->setAchievementsDetails($achievementsDetails);
+        return [
+            'kernel.view' => ['onKernelView', EventPriorities::PRE_SERIALIZE],
+        ];
     }
 }
