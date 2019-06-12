@@ -6,9 +6,10 @@ sudo: false
 
 install:
   - php -v
+  - composer install
 
 script:
-  - echo "TODO"
+  - php bin/phpunit
 
 deploy:
   - provider: heroku
