@@ -19,6 +19,10 @@ class HttpClient
             $postData = str_replace(urlencode('https://localhost:8052'), urlencode('http://api'), $postData);
         }
 
+        if ("test" === $this->kernelEnv) {
+            return null;
+        }
+
         $result = file_get_contents($url, false, stream_context_create(['http' => [
             'method' => 'POST',
             'header' => "Content-type: application/x-www-form-urlencoded\r\nAuthorization: Bearer $jwt",
