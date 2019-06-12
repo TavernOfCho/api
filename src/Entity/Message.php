@@ -24,12 +24,12 @@ class Message
     private $text;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="messages")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="sendedMessages")
      */
     private $sender;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="messages")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="receivedMessages")
      */
     private $receiver;
 
