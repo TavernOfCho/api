@@ -19,7 +19,6 @@ class AchievementGroupTest extends WebTestCase
 
         $this->assertArrayHasKey('hydra:member', $json);
         $this->assertGreaterThan(1, count($json['hydra:member']));
-
     }
 
     /**
