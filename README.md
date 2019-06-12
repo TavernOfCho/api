@@ -1,7 +1,7 @@
 # TavernOfCho API
 
-[![Build Status](https://api.travis-ci.com/TavernOfCho/api.svg?branch=develop)](https://travis-ci.org/okty-io/okty-server) 
-[![Coverage Status](https://coveralls.io/repos/github/TavernOfCho/api/badge.svg?branch=develop)](https://coveralls.io/github/Tavernofcho/api?branch=develop)
+[![Build Status](https://api.travis-ci.com/TavernOfCho/api.svg)](https://travis-ci.org/TavernOfCho/api) 
+[![Coverage Status](https://coveralls.io/repos/github/TavernOfCho/api/badge.svg)](https://coveralls.io/github/TavernOfCho/api)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 
