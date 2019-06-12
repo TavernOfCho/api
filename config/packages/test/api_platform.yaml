@@ -1,0 +1,5 @@
+api_platform:
+    elasticsearch: 
+        enabled: false
+    mercure:
+        enabled: false

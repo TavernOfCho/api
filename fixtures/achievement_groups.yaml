@@ -1,0 +1,5 @@
+App\Entity\AchievementGroup:
+    achievement_group_{0..10}:
+        name: <title()>
+        achievements: '<numberBetween(1, 5)>x <achievement_id()>'
+        users: '<numberBetween(1, 5)>x @user*'

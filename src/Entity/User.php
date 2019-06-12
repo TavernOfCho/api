@@ -123,12 +123,18 @@ class User implements UserInterface
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="sender")
      */
-    private $messages;
+    private $sendedMessages;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="receiver")
+     */
+    private $receivedMessages;
 
     public function __construct()
     {
         $this->completedAchievementGroup = new ArrayCollection();
-        $this->messages = new ArrayCollection();
+        $this->sendedMessages = new ArrayCollection();
+        $this->receivedMessages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -364,15 +370,15 @@ class User implements UserInterface
     /**
      * @return Collection|Message[]
      */
-    public function getMessages(): Collection
+    public function getSendedMessages(): Collection
     {
-        return $this->messages;
+        return $this->sendedMessages;
     }
 
     public function addMessage(Message $message): self
     {
-        if (!$this->messages->contains($message)) {
-            $this->messages[] = $message;
+        if (!$this->sendedMessages->contains($message)) {
+            $this->sendedMessages[] = $message;
             $message->setSender($this);
         }
 
@@ -381,8 +387,8 @@ class User implements UserInterface
 
     public function removeMessage(Message $message): self
     {
-        if ($this->messages->contains($message)) {
-            $this->messages->removeElement($message);
+        if ($this->sendedMessages->contains($message)) {
+            $this->sendedMessages->removeElement($message);
             // set the owning side to null (unless already changed)
             if ($message->getSender() === $this) {
                 $message->setSender(null);
@@ -390,5 +396,18 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getUsername();
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getReceivedMessages(): Collection
+    {
+        return $this->receivedMessages;
     }
 }
