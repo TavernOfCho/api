@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-class WebTestCase extends BaseWebTestCase
+abstract class WebTestCase extends BaseWebTestCase
 {
     use RefreshDatabaseTrait;
 

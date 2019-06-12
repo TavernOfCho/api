@@ -1,0 +1,15 @@
+# Read the documentation: https://github.com/FriendsOfSymfony/FOSElasticaBundle/blob/master/Resources/doc/setup.md
+parameters:
+    elastica_enabled: false
+    elastica_listener:
+        insert: '%elastica_enabled%'
+        update: '%elastica_enabled%'
+        delete: '%elastica_enabled%'
+
+fos_elastica:
+    indexes:
+        index:
+            types:
+                customer:
+                    persistence:
+                        listener: '%elastica_listener%'
