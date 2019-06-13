@@ -4,7 +4,6 @@ namespace App\Utils;
 
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -39,20 +38,18 @@ class BattleNetSDK
      * @param SessionInterface $session
      * @param CacheItemPoolInterface $cacheManager
      * @param HttpClientInterface $battleNetClient
-     * @param RequestStack $requestStack
-     * @param string $defaultLocale
+     * @param Locale $locale
      */
     public function __construct(string $client_id, string $client_secret, SessionInterface $session,
                                 CacheItemPoolInterface $cacheManager, HttpClientInterface $battleNetClient,
-                                RequestStack $requestStack, string $defaultLocale)
+                                Locale $locale)
     {
         $this->client = $battleNetClient;
         $this->client_id = $client_id;
         $this->client_secret = $client_secret;
         $this->session = $session;
         $this->cacheManager = $cacheManager;
-        $request = $requestStack->getCurrentRequest();
-        $this->locale = $request ? $request->getLocale() : $defaultLocale;
+        $this->locale = $locale->getLocale();
     }
 
     /**
