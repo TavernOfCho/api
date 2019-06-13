@@ -43,6 +43,13 @@ class BattleNetBaseApiTest extends WebTestCase
         $this->assertItemOperation($response, $json);
     }
 
+
+    public function testGetAchievements(): void
+    {
+        $response = $this->request('GET', '/achievements');
+        $this->assertEquals('null', $response->getContent());
+    }
+
     public function provider()
     {
         return [
