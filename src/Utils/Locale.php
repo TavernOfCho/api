@@ -48,4 +48,12 @@ class Locale
     {
         return $this->getLocale() === $this->getDefaultLocale();
     }
+
+    /**
+     * @return string
+     */
+    public function getShortLocale(): string
+    {
+        return str_replace("_", "", $this->getLocale());
+    }
 }

@@ -31,4 +31,9 @@ class LocaleTest extends WebTestCase
     {
         $this->assertTrue(is_bool($this->localeService->isDefaultLocale()));
     }
+
+    public function testGetShortLocale()
+    {
+        $this->assertTrue(is_string($this->localeService->getShortLocale()));
+    }
 }

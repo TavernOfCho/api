@@ -32,6 +32,20 @@ class BattleNetBaseApiTest extends WebTestCase
         $this->assertCollectionOperation($response, $json);
     }
 
+    public function testRetrieveRealmsFiltered()
+    {
+        $response = $this->request('GET', '/realms?locale=frFR');
+        $json = json_decode($response->getContent(), true);
+        $this->assertCollectionOperation($response, $json);
+    }
+
+    public function testRetrieveRealmsEnglish()
+    {
+        $response = $this->request('GET', '/realms?locale=en_GB');
+        $json = json_decode($response->getContent(), true);
+        $this->assertCollectionOperation($response, $json);
+    }
+
     /**
      * @dataProvider provider
      * @param string $realm
