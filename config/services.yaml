@@ -36,6 +36,7 @@ services:
             $client_id: '%env(BNET_CLIENT_ID)%'
             $client_secret: '%env(BNET_CLIENT_SECRET)%'
             $cacheManager: '@cache.battle_net' # See framework.yaml and cache.battle_net pool
+            $defaultLocale: '%locale%'
 
     App\Utils\Pagerfanta: ~
 
