@@ -6,7 +6,7 @@ services:
     tags: [ 'api_platform.filter' ]
 
   message.order_filter:
-    parent: 'api_platform.elasticsearch.order_filter'
+    parent: 'api_platform.doctrine.orm.order_filter'
     arguments:
       - {id: 'DESC'}
     tags: [ 'api_platform.filter' ]
