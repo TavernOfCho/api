@@ -14,6 +14,12 @@ class LocaleSubscriber implements EventSubscriberInterface
 
         $locales = ['en_GB', 'es_ES', 'fr_FR', 'ru_RU', 'de_DE', 'pt_PT', 'it_IT'];
 
+        // This case could happen when asking for a locale filter instead of the locale of the request
+        if (strlen($locale) === 4) {
+            $output = str_split($locale, 2);
+            $locale = implode('_', $output);
+        }
+
         if (null !== $locale && in_array($locale, $locales)) {
             $request->attributes->set('_locale', $locale);
             $request->setLocale($locale);
