@@ -5,6 +5,7 @@ namespace App\DataProvider\BattleNet\Realm;
 use ApiPlatform\Core\DataProvider\CollectionDataProviderInterface;
 use ApiPlatform\Core\Exception\ResourceClassNotSupportedException;
 use App\DataProvider\BattleNet\AbstractBattleNetDataProvider;
+use App\DataProvider\Traits\LocaleFilterTrait;
 use App\DataTransformer\RealmTransformer;
 use App\Models\Realm;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -16,6 +17,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 class RealmCollectionDataProvider extends AbstractBattleNetDataProvider implements CollectionDataProviderInterface
 {
     public $model= Realm::class;
+
+    use LocaleFilterTrait;
 
     /**
      * @param string $resourceClass
@@ -30,7 +33,7 @@ class RealmCollectionDataProvider extends AbstractBattleNetDataProvider implemen
                 return $this->battleNetSDK->getRealm($realm['slug']);
             }, $realms['realms']);
 
-            if (null !== $locale = $this->getRequest()->query->get('locale')) {
+            if (null !== $locale = $this->getLocale()->getShortLocale()) {
                 $realms = array_filter($realms, function($realm) use($locale) {
                     return $realm['locale'] === $locale;
                 });
