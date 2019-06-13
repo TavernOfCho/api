@@ -25,6 +25,9 @@ class BattleNetSDK
     /** @var FilesystemAdapter $cacheManager */
     private $cacheManager;
 
+    /** @var string $locale */
+    private $locale;
+
     const LONG_TIME = 86400; //1 day to seconds
     const SHORT_TIME = 600; //10 minutes to seconds
 
@@ -35,15 +38,18 @@ class BattleNetSDK
      * @param SessionInterface $session
      * @param CacheItemPoolInterface $cacheManager
      * @param HttpClientInterface $battleNetClient
+     * @param Locale $locale
      */
     public function __construct(string $client_id, string $client_secret, SessionInterface $session,
-                                CacheItemPoolInterface $cacheManager, HttpClientInterface $battleNetClient)
+                                CacheItemPoolInterface $cacheManager, HttpClientInterface $battleNetClient,
+                                Locale $locale)
     {
         $this->client = $battleNetClient;
         $this->client_id = $client_id;
         $this->client_secret = $client_secret;
         $this->session = $session;
         $this->cacheManager = $cacheManager;
+        $this->locale = $locale->getLocale();
     }
 
     /**
@@ -55,13 +61,13 @@ class BattleNetSDK
             $response = $this->client->request('GET', '/data/wow/realm/', [
                 'query' => [
                     'namespace' => 'dynamic-eu',
-                    'locale' => 'fr_FR',
+                    'locale' => $this->locale,
                     'access_token' => $this->getAccessToken()
                 ]
             ]);
 
             return $this->getJsonContent($response);
-        }, 'realms', self::LONG_TIME);
+        }, $this->getCacheKey('realms'), self::LONG_TIME);
     }
 
     /**
@@ -74,13 +80,13 @@ class BattleNetSDK
             $response = $this->client->request('GET', sprintf('/data/wow/realm/%s', $slug), [
                 'query' => [
                     'namespace' => 'dynamic-eu',
-                    'locale' => 'fr_FR',
+                    'locale' => $this->locale,
                     'access_token' => $this->getAccessToken()
                 ]
             ]);
 
             return $this->getJsonContent($response);
-        }, sprintf('realm_%s', $slug), self::LONG_TIME);
+        }, $this->getCacheKey(sprintf('realm_%s', $slug)), self::LONG_TIME);
     }
 
     /**
@@ -96,13 +102,13 @@ class BattleNetSDK
                 'query' => [
                     'region' => 'eu',
                     'fields' => $fields,
-                    'locale' => 'fr_FR',
+                    'locale' => $this->locale,
                     'access_token' => $this->getAccessToken()
                 ]
             ]);
 
             return $this->getJsonContent($response);
-        }, sprintf('character_%s_%s_%s', $realm, $name, $fields), self::SHORT_TIME);
+        }, $this->getCacheKey(sprintf('character_%s_%s_%s', $realm, $name, $fields)), self::SHORT_TIME);
     }
 
     /**
@@ -114,13 +120,13 @@ class BattleNetSDK
             $response = $this->client->request('GET', '/wow/data/character/classes', [
                 'query' => [
                     'region' => 'eu',
-                    'locale' => 'fr_FR',
+                    'locale' => $this->locale,
                     'access_token' => $this->getAccessToken()
                 ]
             ]);
 
             return $this->getJsonContent($response);
-        }, 'character_classes', self::LONG_TIME);
+        }, $this->getCacheKey('character_classes'), self::LONG_TIME);
     }
 
     /**
@@ -132,13 +138,13 @@ class BattleNetSDK
             $response = $this->client->request('GET', '/wow/data/character/races', [
                 'query' => [
                     'region' => 'eu',
-                    'locale' => 'fr_FR',
+                    'locale' => $this->locale,
                     'access_token' => $this->getAccessToken()
                 ]
             ]);
 
             return $this->getJsonContent($response);
-        }, 'character_races', self::LONG_TIME);
+        }, $this->getCacheKey('character_races'), self::LONG_TIME);
     }
 
     /**
@@ -150,13 +156,13 @@ class BattleNetSDK
             $response = $this->client->request('GET', '/wow/mount/', [
                 'query' => [
                     'region' => 'eu',
-                    'locale' => 'fr_FR',
+                    'locale' => $this->locale,
                     'access_token' => $this->getAccessToken()
                 ]
             ]);
 
             return $this->getJsonContent($response);
-        }, 'mount', self::LONG_TIME);
+        }, $this->getCacheKey('mount'), self::LONG_TIME);
     }
 
 
@@ -170,13 +176,13 @@ class BattleNetSDK
             $response = $this->client->request('GET', sprintf('/wow/achievement/%s', $id), [
                 'query' => [
                     'region' => 'eu',
-                    'locale' => 'fr_FR',
+                    'locale' => $this->locale,
                     'access_token' => $this->getAccessToken()
                 ]
             ]);
 
             return $this->getJsonContent($response);
-        }, sprintf('achievement_%s', $id), self::LONG_TIME);
+        }, $this->getCacheKey(sprintf('achievement_%s', $id)), self::LONG_TIME);
     }
 
     /**
@@ -188,13 +194,13 @@ class BattleNetSDK
             $response = $this->client->request('GET', '/wow/data/character/achievements', [
                 'query' => [
                     'region' => 'eu',
-                    'locale' => 'fr_FR',
+                    'locale' => $this->locale,
                     'access_token' => $this->getAccessToken()
                 ]
             ]);
 
             return $this->getJsonContent($response);
-        }, 'achievements', self::LONG_TIME);
+        }, $this->getCacheKey('achievements'), self::LONG_TIME);
     }
 
     /**
@@ -272,5 +278,10 @@ class BattleNetSDK
     public static function timestampToDate($timestamp)
     {
         return (new \DateTime())->setTimestamp(self::formatTimestamp($timestamp));
+    }
+
+    private function getCacheKey(string $name)
+    {
+        return sprintf("%s_%s", $name, $this->locale);
     }
 }
