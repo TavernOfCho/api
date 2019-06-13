@@ -8,6 +8,10 @@ class Locale
 {
     /** @var string $locale */
     private $locale;
+    /**
+     * @var string
+     */
+    private $defaultLocale;
 
     /**
      * Locale constructor.
@@ -18,6 +22,7 @@ class Locale
     {
         $request = $requestStack->getCurrentRequest();
         $this->locale = $request ? $request->getLocale() : $defaultLocale;
+        $this->defaultLocale = $defaultLocale;
     }
 
     /**
@@ -26,5 +31,21 @@ class Locale
     public function getLocale(): string
     {
         return $this->locale;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultLocale(): string
+    {
+        return $this->defaultLocale;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDefaultLocale()
+    {
+        return $this->getLocale() === $this->getDefaultLocale();
     }
 }
