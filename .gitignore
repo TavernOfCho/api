@@ -24,4 +24,5 @@
 .phpunit
 /phpunit.xml
 /build/logs/clover.xml
+/public/phpunit
 ###< symfony/phpunit-bridge ###

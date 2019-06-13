@@ -28,10 +28,6 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
-    App\Manager\:
-        resource: '../src/Manager'
-        public: true
-
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
