@@ -5,3 +5,9 @@ services:
       - {bnet_user: 'exact'}
     tags: [ 'api_platform.filter' ]
 
+  message.order_filter:
+    parent: 'api_platform.elasticsearch.order_filter'
+    arguments:
+      - {id: 'DESC'}
+    tags: [ 'api_platform.filter' ]
+
