@@ -16,6 +16,9 @@ class Mailer
     /** @var Environment $twig */
     private $twig;
 
+    /** @var Locale $locale */
+    private $locale;
+
     /** @var string $mailSender */
     private $mailSender;
 
@@ -23,12 +26,14 @@ class Mailer
      * Mailer constructor.
      * @param Environment $twig
      * @param \Swift_Mailer $mailer
+     * @param Locale $locale
      * @param string $mailSender
      */
-    public function __construct(Environment $twig, \Swift_Mailer $mailer, string $mailSender)
+    public function __construct(Environment $twig, \Swift_Mailer $mailer, Locale $locale, string $mailSender)
     {
         $this->twig = $twig;
         $this->mailer = $mailer;
+        $this->locale = $locale;
         $this->mailSender = $mailSender;
     }
 
@@ -44,6 +49,8 @@ class Mailer
 
     public function sendMail(string $subject, string $to, string $viewPath, array $viewParameters = null)
     {
+        $viewParameters['locale'] = $this->locale;
+
         $mail =  new \Swift_Message();
         $mail = $mail
             ->setSubject($subject)
