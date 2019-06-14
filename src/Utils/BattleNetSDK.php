@@ -299,16 +299,17 @@ class BattleNetSDK
      */
     private function handleResultAndNullResultCase(callable $callback)
     {
+        // Issue linked : https://us.battle.net/forums/en/bnet/topic/20766476583
         // Used to launch a "try again" when the blizzard API returns a null result
-        if (null === $result = $callback()) {
-            $result = $callback();
+
+        $try = 1;
+        while ($try <= 3) {
+            $try++;
+            if (null !== $result = $callback()) {
+                return $result;
+            }
         }
 
-        // If the result is still null, then we throw an exception
-        if (null === $result) {
-            throw new BattleNetException();
-        }
-
-        return $result;
+        throw new BattleNetException();
     }
 }
