@@ -257,7 +257,11 @@ class BattleNetSDK
             return $cacheContent->get();
         }
 
-        $this->cacheManager->save($cacheContent->expiresAfter($expiresAfter)->set($callback()));
+        if (null === $result = $callback()) {
+            return null;
+        }
+
+        $this->cacheManager->save($cacheContent->expiresAfter($expiresAfter)->set($result));
 
         return $cacheContent->get();
     }
