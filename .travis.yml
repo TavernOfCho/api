@@ -4,11 +4,25 @@ php:
 
 sudo: false
 
+services:
+  - postgresql
+
+
+before_script: 
+  - psql -c 'create database travis_ci_test;' -U postgres
+  - psql -c "CREATE USER foo WITH PASSWORD 'bar';" -U postgres
+
 install:
   - php -v
+  - mkdir -p build/logs
+  - composer install
 
 script:
-  - echo "TODO"
+  - php bin/console doctrine:schema:update --force
+  - php bin/phpunit
+
+after_success:
+  - travis_retry php vendor/bin/php-coveralls -v
 
 deploy:
   - provider: heroku

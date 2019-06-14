@@ -4,6 +4,7 @@ namespace App\DataProvider;
 
 use App\DataProvider\BattleNet\AbstractBattleNetDataProvider;
 use App\DataTransformer\DefaultTransformer;
+use App\Utils\Locale;
 use Psr\Container\ContainerInterface;
 use Symfony\Contracts\Service\ServiceSubscriberInterface;
 use Symfony\Component\Finder\Finder;
@@ -39,6 +40,10 @@ class BattleNetDataProviderConfigurator implements ServiceSubscriberInterface
             new DefaultTransformer($class);
 
         call_user_func_array([$battleNetDataProvider, 'setTransformer'], [$transformer]);
+
+        if (method_exists($battleNetDataProvider, 'setLocale')) {
+            call_user_func_array([$battleNetDataProvider, 'setLocale'], [$this->container->get(Locale::class)]);
+        }
     }
 
     /**
@@ -57,7 +62,7 @@ class BattleNetDataProviderConfigurator implements ServiceSubscriberInterface
         $finder = new Finder();
         $finder->files()->in(__DIR__ . "/../DataTransformer");
 
-        $files = [];
+        $files = ['App\Utils\Locale'];
         foreach ($finder->files()->getIterator() as $fileInfo) {
             $file = sprintf("App\DataTransformer\%s", str_replace(".php", '', $fileInfo->getFilename()));
             if (!in_array($file, $ignoredTransformers)) {

@@ -20,3 +20,9 @@
 ###< lexik/jwt-authentication-bundle ###
 /config/jwt/
 /sub
+###> symfony/phpunit-bridge ###
+.phpunit
+/phpunit.xml
+/build/logs/clover.xml
+/public/phpunit
+###< symfony/phpunit-bridge ###

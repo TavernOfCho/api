@@ -120,9 +120,21 @@ class User implements UserInterface
      */
     private $enabledCodeDate;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="sender")
+     */
+    private $sendedMessages;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="receiver")
+     */
+    private $receivedMessages;
+
     public function __construct()
     {
         $this->completedAchievementGroup = new ArrayCollection();
+        $this->sendedMessages = new ArrayCollection();
+        $this->receivedMessages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -353,5 +365,49 @@ class User implements UserInterface
         $this->enabledCodeDate = $enabledCodeDate;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getSendedMessages(): Collection
+    {
+        return $this->sendedMessages;
+    }
+
+    public function addMessage(Message $message): self
+    {
+        if (!$this->sendedMessages->contains($message)) {
+            $this->sendedMessages[] = $message;
+            $message->setSender($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): self
+    {
+        if ($this->sendedMessages->contains($message)) {
+            $this->sendedMessages->removeElement($message);
+            // set the owning side to null (unless already changed)
+            if ($message->getSender() === $this) {
+                $message->setSender(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getUsername();
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getReceivedMessages(): Collection
+    {
+        return $this->receivedMessages;
     }
 }

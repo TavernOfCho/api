@@ -57,7 +57,7 @@ class CharacterCollectionDataProvider extends AbstractBattleNetDataProvider impl
 
             $character = $this->getRequest()->attributes->get('id');
             $character = $this->battleNetSDK->getCharacter($character, $realm);
-            $content = $this->battleNetSDK->getAchievements($character['faction']);
+            $content = $this->battleNetSDK->getAchievements();
             $content = $content['achievements'];
 
             $data = [];
