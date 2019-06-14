@@ -2,6 +2,7 @@
 
 namespace App\Utils;
 
+use App\Exception\BattleNetException;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -257,9 +258,7 @@ class BattleNetSDK
             return $cacheContent->get();
         }
 
-        if (null === $result = $callback()) {
-            return null;
-        }
+        $result = $this->handleResultAndNullResultCase($callback);
 
         $this->cacheManager->save($cacheContent->expiresAfter($expiresAfter)->set($result));
 
@@ -284,8 +283,33 @@ class BattleNetSDK
         return (new \DateTime())->setTimestamp(self::formatTimestamp($timestamp));
     }
 
+    /**
+     * @param string $name
+     * @return string
+     */
     private function getCacheKey(string $name)
     {
         return sprintf("%s_%s", $name, $this->locale);
+    }
+
+    /**
+     * @param callable $callback
+     * @return array
+     * @throws BattleNetException
+     */
+    private function handleResultAndNullResultCase(callable $callback)
+    {
+        // Issue linked : https://us.battle.net/forums/en/bnet/topic/20766476583
+        // Used to launch a "try again" when the blizzard API returns a null result
+
+        $try = 1;
+        while ($try <= 3) {
+            $try++;
+            if (null !== $result = $callback()) {
+                return $result;
+            }
+        }
+
+        throw new BattleNetException();
     }
 }
