@@ -21,6 +21,7 @@ class AuthenticationSuccessListener implements EventSubscriberInterface
         $data = $event->getData();
         $data['data'] = [
             '@id' => sprintf("/users/%s", $user->getId()),
+            'username' => $user->getUsername()
         ];
 
         $event->setData($data);
