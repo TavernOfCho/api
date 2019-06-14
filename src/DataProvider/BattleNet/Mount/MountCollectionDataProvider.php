@@ -6,6 +6,7 @@ use ApiPlatform\Core\DataProvider\CollectionDataProviderInterface;
 use ApiPlatform\Core\Exception\ResourceClassNotSupportedException;
 use App\DataProvider\BattleNet\AbstractBattleNetDataProvider;
 use App\DataTransformer\MountTransformer;
+use App\Exception\BattleNetException;
 use App\Models\Mount;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -26,6 +27,10 @@ class MountCollectionDataProvider extends AbstractBattleNetDataProvider implemen
     {
         if ($operationName === 'get') {
             $mounts = $this->battleNetSDK->getMounts();
+            if (null === $mounts) {
+                throw new BattleNetException();
+            }
+
             $mounts = $mounts['mounts'];
 
             $data = $this->transformer->transformCollection($mounts);
