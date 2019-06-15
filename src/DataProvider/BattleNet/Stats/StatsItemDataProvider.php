@@ -1,23 +1,23 @@
 <?php
 
-namespace App\DataProvider\BattleNet\Character;
+namespace App\DataProvider\BattleNet\Stats;
 
 use ApiPlatform\Core\DataProvider\ItemDataProviderInterface;
 use ApiPlatform\Core\Exception\ResourceClassNotSupportedException;
 use App\DataProvider\BattleNet\AbstractBattleNetDataProvider;
 use App\DataProvider\Traits\RealmFilterTrait;
-use App\DataTransformer\CharacterTransformer;
-use App\Models\Character;
+use App\DataTransformer\StatsTransformer;
+use App\Models\Stats;
 
 /**
- * Class CharacterItemDataProvider
- * @property CharacterTransformer $transformer
+ * Class StatsItemDataProvider
+ * @property StatsTransformer $transformer
  */
-class CharacterItemDataProvider extends AbstractBattleNetDataProvider implements ItemDataProviderInterface
+class StatsItemDataProvider extends AbstractBattleNetDataProvider implements ItemDataProviderInterface
 {
     use RealmFilterTrait;
 
-    public $model = Character::class;
+    public $model = Stats::class;
 
     /**
      * Retrieves an item.
@@ -26,14 +26,17 @@ class CharacterItemDataProvider extends AbstractBattleNetDataProvider implements
      * @param array|int|string $id
      * @param string|null $operationName
      * @param array $context
-     * @return Character
+     * @return Stats
      */
     public function getItem(string $resourceClass, $id, string $operationName = null, array $context = [])
     {
-        if ($operationName === 'get') {
+        if ($operationName === 'character_stats') {
             $realm = $this->getRealm();
 
-            return $this->transformer->transformItem($this->battleNetSDK->getCharacter($id, $realm));
+            $character = $this->battleNetSDK->getCharacter($id, $realm, 'stats');
+            $character['stats']['name'] = $character['name'];
+
+            return $this->transformer->transformItem($character['stats']);
         }
 
         throw new ResourceClassNotSupportedException();
