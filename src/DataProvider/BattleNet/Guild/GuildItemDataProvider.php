@@ -1,23 +1,24 @@
 <?php
 
-namespace App\DataProvider\BattleNet\Character;
+namespace App\DataProvider\BattleNet\Guild;
 
 use ApiPlatform\Core\DataProvider\ItemDataProviderInterface;
 use ApiPlatform\Core\Exception\ResourceClassNotSupportedException;
 use App\DataProvider\BattleNet\AbstractBattleNetDataProvider;
 use App\DataProvider\Traits\RealmFilterTrait;
-use App\DataTransformer\CharacterTransformer;
+use App\DataTransformer\GuildTransformer;
 use App\Models\Character;
+use App\Models\Guild;
 
 /**
- * Class CharacterItemDataProvider
- * @property CharacterTransformer $transformer
+ * Class GuildItemDataProvider
+ * @property GuildTransformer $transformer
  */
-class CharacterItemDataProvider extends AbstractBattleNetDataProvider implements ItemDataProviderInterface
+class GuildItemDataProvider extends AbstractBattleNetDataProvider implements ItemDataProviderInterface
 {
     use RealmFilterTrait;
 
-    public $model = Character::class;
+    public $model = Guild::class;
 
     /**
      * Retrieves an item.
@@ -26,16 +27,17 @@ class CharacterItemDataProvider extends AbstractBattleNetDataProvider implements
      * @param array|int|string $id
      * @param string|null $operationName
      * @param array $context
-     * @return Character
+     * @return Guild
      */
     public function getItem(string $resourceClass, $id, string $operationName = null, array $context = [])
     {
-        if ($operationName === 'get') {
+        if ($operationName === 'character_guild') {
             $realm = $this->getRealm();
 
-            return $this->transformer->transformItem($this->battleNetSDK->getCharacter($id, $realm));
+            return $this->transformer->transformItem($this->battleNetSDK->getCharacter($id, $realm, 'guild'));
         }
 
         throw new ResourceClassNotSupportedException();
     }
+
 }

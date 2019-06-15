@@ -5,7 +5,7 @@ namespace App\Models;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 
-class Mounts
+class CharacterMounts
 {
     /**
      * @ApiProperty(identifier=true)
@@ -38,7 +38,7 @@ class Mounts
 
     /**
      * @param string $name
-     * @return Mounts
+     * @return CharacterMounts
      */
     public function setName(?string $name): self
     {
@@ -57,7 +57,7 @@ class Mounts
 
     /**
      * @param int $numCollected
-     * @return Mounts
+     * @return CharacterMounts
      */
     public function setNumCollected(?int $numCollected): self
     {
@@ -76,7 +76,7 @@ class Mounts
 
     /**
      * @param int $numNotCollected
-     * @return Mounts
+     * @return CharacterMounts
      */
     public function setNumNotCollected(?int $numNotCollected): self
     {
@@ -95,7 +95,7 @@ class Mounts
 
     /**
      * @param array $collected
-     * @return Mounts
+     * @return CharacterMounts
      */
     public function setCollected(?array $collected): self
     {
