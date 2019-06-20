@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use ApiPlatform\Core\Annotation\ApiProperty;
+
 class Reputation
 {
     /**
+     * @ApiProperty(identifier=true)
      * @var int $id
      */
     private $id;

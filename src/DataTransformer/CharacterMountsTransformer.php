@@ -2,17 +2,17 @@
 
 namespace App\DataTransformer;
 
-use App\Models\Mounts;
+use App\Models\CharacterMounts;
 
-class MountsTransformer extends AbstractTransformer
+class CharacterMountsTransformer extends AbstractTransformer
 {
     /**
      * @param $data
-     * @return Mounts
+     * @return CharacterMounts
      */
     public function transformItem($data)
     {
-        return $this->fillProperties($data, new Mounts());
+        return $this->fillProperties($data, new CharacterMounts());
     }
 
     public function transformCollection($data)
