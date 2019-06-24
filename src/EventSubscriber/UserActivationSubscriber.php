@@ -37,7 +37,7 @@ class UserActivationSubscriber implements EventSubscriberInterface
         $methods = [Request::METHOD_POST, Request::METHOD_PUT];
         if ($entity instanceof User && in_array($method, $methods) && null === $entity->getEnabledCode() && !$entity->getEnabled()) {
             $entity->setEnabledCode(uniqid())->setEnabledCodeDate(new \DateTime());
-            $this->mailer->sendMail('Activez votre compte TavernOfCho', $entity->getEmail(), 'user_email_activation.html.twig', [
+            $this->mailer->sendMail('Bienvenue sur TavernOfCho', $entity->getEmail(), 'user_email_activation.html.twig', [
                 'code' => $entity->getEnabledCode(),
                 'domain' => $this->websiteUrl
             ]);
