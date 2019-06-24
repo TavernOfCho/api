@@ -7,41 +7,16 @@ App\Models\Realm:
 App\Models\Character:
     itemOperations:
         get: ~ 
-        character_items:
-            method: GET
-            path: /characters/{id}/{realm}/items
-            controller: 'App\Controller\Api\DefaultAction'
+    collectionOperations:
+        get:
+            controller: 'App\Controller\Api\BlankAction'
             swagger_context:
-                summary: "Retrieve items with specific filters for a character"
-                description: "Retrieve items with specific filters for a character"
-        character_stats:
-            method: GET
-            path: /characters/{id}/{realm}/stats
-            controller: 'App\Controller\Api\DefaultAction'
-            swagger_context:
-                summary: "Retrieve stats with specific filters for a character"
-                description: "Retrieve stats with specific filters for a character"
-        character_guild:
-            method: GET
-            path: /characters/{id}/{realm}/guild
-            controller: 'App\Controller\Api\DefaultAction'
-            swagger_context:
-                summary: "Retrieve an achievement list with specific filters for a character"
-                description: "Retrieve an achievement list with specific filters for a character"
-        character_pets:
-            method: GET
-            path: /characters/{id}/{realm}/pets
-            controller: 'App\Controller\Api\DefaultAction'
-            swagger_context:
-                summary: "Retrieve a list of pets with specific filters for a character"
-                description: "Retrieve a pets list with specific filters for a character"
-        character_mounts:
-            method: GET
-            path: /characters/{id}/{realm}/mounts
-            controller: 'App\Controller\Api\DefaultAction'
-            swagger_context:
-                summary: "Retrieve a list of mounts with specific filters for a character"
-                description: "Retrieve a mounts list with specific filters for a character"
+                summary: "Disabled action, will always return null"
+                description: "Disabled action, will always return null"
+
+App\Models\Achievement:
+    itemOperations:
+        get: ~
     collectionOperations:
         get:
             controller: 'App\Controller\Api\BlankAction'
@@ -62,30 +37,6 @@ App\Models\Character:
             swagger_context:
                 summary: "Retrieve an achievement list with specific filters for a character"
                 description: "Retrieve an achievement list with specific filters for a character"
-        character_feeds:
-            method: GET
-            path: /characters/{id}/{realm}/feeds
-            controller: 'App\Controller\Api\DefaultAction'
-            swagger_context:
-                summary: "Retrieve a list of feed with specific filters for a character"
-                description: "Retrieve an achievement list with specific filters for a character"
-        character_reputations:
-            method: GET
-            path: /characters/{id}/{realm}/reputations
-            controller: 'App\Controller\Api\DefaultAction'
-            swagger_context:
-                summary: "Retrieve a list of reputation with specific filters for a character"
-                description: "Retrieve a reputation list with specific filters for a character"
-
-App\Models\Achievement:
-    itemOperations:
-        get: ~
-    collectionOperations:
-        get:
-            controller: 'App\Controller\Api\BlankAction'
-            swagger_context:
-                summary: "Disabled action, will always return null"
-                description: "Disabled action, will always return null"
 
 App\Models\Classes:
     itemOperations:
@@ -96,6 +47,27 @@ App\Models\Classes:
                 description: "Disabled action, will always return null"
     collectionOperations:
         get: ~
+
+App\Models\Feed:
+    itemOperations:
+        get:
+            controller: 'App\Controller\Api\BlankAction'
+            swagger_context:
+                summary: "Disabled action, will always return null"
+                description: "Disabled action, will always return null"
+    collectionOperations:
+        get:
+            controller: 'App\Controller\Api\BlankAction'
+            swagger_context:
+                summary: "Disabled action, will always return null"
+                description: "Disabled action, will always return null"
+        character_feeds:
+            method: GET
+            path: /characters/{id}/{realm}/feeds
+            controller: 'App\Controller\Api\DefaultAction'
+            swagger_context:
+                summary: "Retrieve a list of feed with specific filters for a character"
+                description: "Retrieve an achievement list with specific filters for a character"
 
 App\Models\Race:
     itemOperations:
@@ -114,6 +86,13 @@ App\Models\Items:
             swagger_context:
                 summary: "Disabled action, will always return null"
                 description: "Disabled action, will always return null"
+        character_items:
+            method: GET
+            path: /characters/{id}/{realm}/items
+            controller: 'App\Controller\Api\DefaultAction'
+            swagger_context:
+                summary: "Retrieve items with specific filters for a character"
+                description: "Retrieve items with specific filters for a character"
     collectionOperations:
         get:
             controller: 'App\Controller\Api\BlankAction'
@@ -128,6 +107,34 @@ App\Models\Stats:
             swagger_context:
                 summary: "Disabled action, will always return null"
                 description: "Disabled action, will always return null"
+        character_stats:
+            method: GET
+            path: /characters/{id}/{realm}/stats
+            controller: 'App\Controller\Api\DefaultAction'
+            swagger_context:
+                summary: "Retrieve stats with specific filters for a character"
+                description: "Retrieve stats with specific filters for a character"
+    collectionOperations:
+        get:
+            controller: 'App\Controller\Api\BlankAction'
+            swagger_context:
+                summary: "Disabled action, will always return null"
+                description: "Disabled action, will always return null"
+
+App\Models\Pets:
+    itemOperations:
+        get:
+            controller: 'App\Controller\Api\BlankAction'
+            swagger_context:
+                summary: "Disabled action, will always return null"
+                description: "Disabled action, will always return null"
+        character_pets:
+            method: GET
+            path: /characters/{id}/{realm}/pets
+            controller: 'App\Controller\Api\DefaultAction'
+            swagger_context:
+                summary: "Retrieve a list of pets with specific filters for a character"
+                description: "Retrieve a pets list with specific filters for a character"
     collectionOperations:
         get:
             controller: 'App\Controller\Api\BlankAction'
@@ -142,6 +149,13 @@ App\Models\Guild:
             swagger_context:
                 summary: "Disabled action, will always return null"
                 description: "Disabled action, will always return null"
+        character_guild:
+            method: GET
+            path: /characters/{id}/{realm}/guild
+            controller: 'App\Controller\Api\DefaultAction'
+            swagger_context:
+                summary: "Retrieve an achievement list with specific filters for a character"
+                description: "Retrieve an achievement list with specific filters for a character"
     collectionOperations:
         get:
             controller: 'App\Controller\Api\BlankAction'
@@ -158,3 +172,45 @@ App\Models\Mount:
                 description: "Disabled action, will always return null"
     collectionOperations:
         get: ~
+
+App\Models\CharacterMounts:
+    itemOperations:
+        get:
+            controller: 'App\Controller\Api\BlankAction'
+            swagger_context:
+                summary: "Disabled action, will always return null"
+                description: "Disabled action, will always return null"
+        character_mounts:
+            method: GET
+            path: /characters/{id}/{realm}/mounts
+            controller: 'App\Controller\Api\DefaultAction'
+            swagger_context:
+                summary: "Retrieve a list of mounts with specific filters for a character"
+                description: "Retrieve a mounts list with specific filters for a character"
+    collectionOperations:
+        get:
+            controller: 'App\Controller\Api\BlankAction'
+            swagger_context:
+                summary: "Disabled action, will always return null"
+                description: "Disabled action, will always return null"
+
+App\Models\Reputation:
+    itemOperations:
+        get:
+            controller: 'App\Controller\Api\BlankAction'
+            swagger_context:
+                summary: "Disabled action, will always return null"
+                description: "Disabled action, will always return null"
+    collectionOperations:
+        get:
+            controller: 'App\Controller\Api\BlankAction'
+            swagger_context:
+                summary: "Disabled action, will always return null"
+                description: "Disabled action, will always return null"
+        character_reputations:
+            method: GET
+            path: /characters/{id}/{realm}/reputations
+            controller: 'App\Controller\Api\DefaultAction'
+            swagger_context:
+                summary: "Retrieve a list of reputation with specific filters for a character"
+                description: "Retrieve a reputation list with specific filters for a character"

@@ -7,7 +7,7 @@ use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class AuthenticationSuccessListener implements EventSubscriberInterface
+class AuthenticationSuccessSubscriber implements EventSubscriberInterface
 {
     public function onAuthenticationSuccessResponse(AuthenticationSuccessEvent $event)
     {
@@ -20,9 +20,12 @@ class AuthenticationSuccessListener implements EventSubscriberInterface
 
         $data = $event->getData();
         $data['data'] = [
-            '@id' => sprintf("/users/%s", $user->getId()),
             'username' => $user->getUsername()
         ];
+
+        if (method_exists($user, 'getId')) {
+            $data['data']['id'] = $user->getId();
+        }
 
         $event->setData($data);
     }
