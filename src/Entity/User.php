@@ -130,6 +130,24 @@ class User implements UserInterface
      */
     private $receivedMessages;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"user_write", "user_read"})
+     */
+    private $locale;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"user_write", "user_read"})
+     */
+    private $server;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"user_write", "user_read"})
+     */
+    private $character;
+
     public function __construct()
     {
         $this->completedAchievementGroup = new ArrayCollection();
@@ -409,5 +427,41 @@ class User implements UserInterface
     public function getReceivedMessages(): Collection
     {
         return $this->receivedMessages;
+    }
+
+    public function getLocale(): ?string
+    {
+        return $this->locale;
+    }
+
+    public function setLocale(?string $locale): self
+    {
+        $this->locale = $locale;
+
+        return $this;
+    }
+
+    public function getServer(): ?string
+    {
+        return $this->server;
+    }
+
+    public function setServer(?string $server): self
+    {
+        $this->server = $server;
+
+        return $this;
+    }
+
+    public function getCharacter(): ?string
+    {
+        return $this->character;
+    }
+
+    public function setCharacter(?string $character): self
+    {
+        $this->character = $character;
+
+        return $this;
     }
 }
